@@ -1,7 +1,6 @@
-'use strict';
-import express from 'express'
-import mongoose from 'mongoose'
-import bodyParser from 'body-parser'
+var express = require('express')
+var mongoose = require('mongoose')
+var bodyParser = require('body-parser')
 
 var app = express()
 
@@ -12,12 +11,12 @@ app.use(bodyParser.json())
 var schema = new mongoose.Schema({ name: 'string', size: 'string' })
 var Tank = mongoose.model('Tank', schema)
 
-app.post('/tanks', (req,res) => {
+app.post('/tanks', function(req,res) {
   Tank.create({
     name:req.body.name,
     size: req.body.size
   },
-  (err,small) => {
+  function (err, small) {
     if (err) {
       res.send({'success':false})
     } else {
@@ -26,7 +25,7 @@ app.post('/tanks', (req,res) => {
   })
 })
 
-app.get('/', (req,res) => {
+app.get('/', function(req,res) {
   res.send('Hello, World!')
 })
 
