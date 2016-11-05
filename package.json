@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "babel-node": "babel-node --presets=es2015",
-    "build-server":"babel server --out-file server.js"
+    "build-server":"babel server --out-dir out"
   },
   "repository": {
     "type": "git",

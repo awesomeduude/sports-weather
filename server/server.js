@@ -1,35 +1,15 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import bodyParser from 'body-parser'
+var express = require('express')
+var mongoose = require('mongoose')
+var bodyParser = require('body-parser')
+var { database } = require('./keys')
+var routes = require('./routes/tanks')
 
-import { database } from './keys'
-
-const app = express()
+let app = express()
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-
-const schema = new mongoose.Schema({ name: 'string', size: 'string' })
-const Tank = mongoose.model('Tank', schema)
-
-app.post('/tanks', (req,res) => {
-  Tank.create({
-    name:req.body.name,
-    size: req.body.size
-  },
-  (err, small) => {
-    if (err) {
-      res.send({'success':false})
-    } else {
-      res.send({'success':true})
-    }
-  })
-})
-
-app.get('/', (req,res) => {
-  res.send('Hello, World!')
-})
+app.use('/', routes)
 
 mongoose.connect(process.env.MONGODB_URI || database)
 
