@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "babel-node": "babel-node --presets=es2015",
-    "build-server":"babel server --out-dir out"
+    "build-server": "babel server --out-dir out"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "mongoose": "^4.6.6"
+    "mongoose": "^4.6.6",
+    "pug": "^2.0.0-beta6"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

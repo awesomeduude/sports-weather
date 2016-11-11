@@ -17,7 +17,6 @@ app.use(bodyParser.json())
 
 app.use('/', routes)
 
-
 mongoose.connect(process.env.MONGODB_URI || database)
 
 app.listen(process.env.PORT || 3000, () => {

@@ -1,0 +1,21 @@
+html
+  head
+    title Sports Weather - #{title}
+    script(type='text/javascript' src='./build/bundle.js')
+    link(rel='stylesheet', href='./build/main.css')
+  body
+    nav
+      input(type='checkBox' class='nav-trigger' id='nav-trigger')
+      label(for='nav-trigger')
+
+      div.navigation
+        
+        a(href='/dashboard') Dashboard
+        a(href='/events') Events
+        if signedIn
+          a(href='/signout') Sign Out
+        else
+          a(href='/login') Login
+
+    main
+      block content
