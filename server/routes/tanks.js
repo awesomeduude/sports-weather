@@ -1,15 +1,18 @@
-var express = require('express')
+const express = require('express')
 
-var Tank = require('../models/tank')
+const Tank = require('../models/tank')
 
 let router = express.Router()
 
 router.get('/', (req,res) => {
-  res.send('Hello, World!')
+  res.render('layout.pug', {
+      title: 'Home',
+      signedIn: false
+    })
 })
 
 router.post('/tanks', (req,res) => {
-  
+
   Tank.create({
     name:req.body.name,
     size: req.body.size

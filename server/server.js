@@ -1,15 +1,22 @@
-var express = require('express')
-var mongoose = require('mongoose')
-var bodyParser = require('body-parser')
-var { database } = require('./keys')
-var routes = require('./routes/tanks')
+const express = require('express')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const { database } = require('./keys')
+const routes = require('./routes/tanks')
+const path = require('path')
 
-let app = express()
+const app = express()
+
+app.use('/build',express.static(path.join(__dirname,'..','/build')))
+
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname,'/views'))
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.use('/', routes)
+
 
 mongoose.connect(process.env.MONGODB_URI || database)
 
