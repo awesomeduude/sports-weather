@@ -1,7 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const { database } = require('./keys')
 const routes = require('./routes/tanks')
 const path = require('path')
 
@@ -17,7 +16,7 @@ app.use(bodyParser.json())
 
 app.use('/', routes)
 
-mongoose.connect(process.env.MONGODB_URI || database)
+mongoose.connect(process.env.MONGODB_URI || require('./keys').database)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('***************Listening on port 3000***************');
