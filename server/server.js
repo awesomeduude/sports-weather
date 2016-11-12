@@ -17,7 +17,7 @@ app.use(bodyParser.json())
 
 app.use('/', routes)
 
-mongoose.connect(process.env.MONGODB_URI || database)
+mongoose.connect(process.env.MONGODB_URI || require('./keys').database)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('***************Listening on port 3000***************');
