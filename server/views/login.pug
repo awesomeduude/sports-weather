@@ -1,0 +1,22 @@
+extends layout.pug
+
+block content
+  .login
+    h1 Login
+    if errors
+      each err in errors
+        p= err.msg
+    form(method='post', action='/login')
+      fieldset
+        label(for='name') Name
+        input(type='text' id='name' name='name' placeholder='Enter Name')
+      fieldset
+        label(for='email') Email
+        input(type='text' id='email' name='email' placeholder='Enter Email')
+      fieldset
+        label(for='password') Password
+        input(type='password' id='password' name='password' placeholder='Enter Password')
+      fieldset
+        label(for='cpassword') Confirm Password
+        input(type='password' id='cpassword' name='cpassword' placeholder='Confirm Password')
+      button(type='submit') Login

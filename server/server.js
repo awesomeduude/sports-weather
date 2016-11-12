@@ -1,9 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const { database } = 0 //require('./keys')
-const routes = require('./routes/tanks')
+const validator = require('express-validator')
 const path = require('path')
+
+const { database } = require('./keys')
+const tanks = require('./routes/tanks')
+const login = require('./routes/login')
 
 const app = express()
 
@@ -15,7 +18,11 @@ app.set('views', path.join(__dirname,'/views'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-app.use('/', routes)
+app.use(validator())
+
+app.use('/', tanks)
+
+app.use('/', login)
 
 mongoose.connect(process.env.MONGODB_URI || require('./keys').database)
 

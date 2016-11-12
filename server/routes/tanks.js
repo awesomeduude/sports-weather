@@ -2,13 +2,10 @@ const express = require('express')
 
 const Tank = require('../models/tank')
 
-let router = express.Router()
+const router = express.Router()
 
 router.get('/', (req,res) => {
-  res.render('layout.pug', {
-      title: 'Home',
-      signedIn: false
-    })
+  res.redirect('/login')
 })
 
 router.post('/tanks', (req,res) => {
