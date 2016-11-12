@@ -7,15 +7,24 @@ $fonts: 'Roboto', Helvetica, sans-serif
 body
   color:#111
   font-family: $fonts
-  padding: 1em
+  margin: 0
+  padding: 0
 
 label[for='nav-trigger']
   position: relative
+  left: 0
+  +transition()
   padding-left: 1.25em
   margin: 1em
   cursor: pointer
+  z-index: 2
+  display: inline-block
+  height: 2em
+  width: 2em
+
 
   &:before
+    display: inline-block
     content: ""
     position: absolute
     left: 0
@@ -25,6 +34,7 @@ label[for='nav-trigger']
     background: black
     box-shadow: 0 0.65em 0 0 black, 0 1.3em 0 0 black
 
+
 .navigation
   box-sizing: border-box
   display: flex
@@ -33,12 +43,13 @@ label[for='nav-trigger']
   background: #333
 
   position: fixed
-  left: -$nav-width
+  left: 0
   top: 0
   bottom: 0
+  z-index: 0
 
   width: $nav-width
-  +transition()
+
 
   flex-direction: column
   justify-content: flex-start
@@ -55,12 +66,21 @@ label[for='nav-trigger']
     &:hover
       color: darken(chartreuse, 10%)
 
-
+.content
+  position: absolute;
+  +transition()
+  z-index: 1
+  background: white
+  padding: 1em
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
 .nav-trigger
   display: none
-  +transition()
 
-  &:checked ~ .navigation
-    left: 0
   &:checked ~ label[for='nav-trigger']
+    left: $nav-width
+
+  &:checked ~ .content
     left: $nav-width

@@ -1,14 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);body {
   color: #111;
   font-family: "Roboto", Helvetica, sans-serif;
-  padding: 1em; }
+  margin: 0;
+  padding: 0; }
 
 label[for='nav-trigger'] {
   position: relative;
+  left: 0;
+  -webkit-transition: all 0.15s ease-out 0s;
+  -moz-transition: all 0.15s ease-out 0s;
+  transition: all 0.15s ease-out 0s;
   padding-left: 1.25em;
   margin: 1em;
-  cursor: pointer; }
+  cursor: pointer;
+  z-index: 2;
+  display: inline-block;
+  height: 2em;
+  width: 2em; }
   label[for='nav-trigger']:before {
+    display: inline-block;
     content: "";
     position: absolute;
     left: 0;
@@ -24,13 +34,11 @@ label[for='nav-trigger'] {
   list-style: none;
   background: #333;
   position: fixed;
-  left: -10em;
+  left: 0;
   top: 0;
   bottom: 0;
+  z-index: 0;
   width: 10em;
-  -webkit-transition: all 0.15s ease-out 0s;
-  -moz-transition: all 0.15s ease-out 0s;
-  transition: all 0.15s ease-out 0s;
   flex-direction: column;
   justify-content: flex-start;
   padding: 2em 1em; }
@@ -42,12 +50,22 @@ label[for='nav-trigger'] {
     .navigation a:hover {
       color: #66cc00; }
 
-.nav-trigger {
-  display: none;
+.content {
+  position: absolute;
   -webkit-transition: all 0.15s ease-out 0s;
   -moz-transition: all 0.15s ease-out 0s;
-  transition: all 0.15s ease-out 0s; }
-  .nav-trigger:checked ~ .navigation {
-    left: 0; }
+  transition: all 0.15s ease-out 0s;
+  z-index: 1;
+  background: white;
+  padding: 1em;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+
+.nav-trigger {
+  display: none; }
   .nav-trigger:checked ~ label[for='nav-trigger'] {
+    left: 10em; }
+  .nav-trigger:checked ~ .content {
     left: 10em; }

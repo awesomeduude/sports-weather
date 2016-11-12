@@ -4,18 +4,26 @@ html
     script(type='text/javascript' src='./build/bundle.js')
     link(rel='stylesheet', href='./build/main.css')
   body
-    nav
-      input(type='checkBox' class='nav-trigger' id='nav-trigger')
-      label(for='nav-trigger')
+    input(type='checkBox' class='nav-trigger' id='nav-trigger')
+    label(for='nav-trigger')
+    nav.navigation
 
-      div.navigation
-        
-        a(href='/dashboard') Dashboard
-        a(href='/events') Events
-        if signedIn
-          a(href='/signout') Sign Out
-        else
-          a(href='/login') Login
+      a(href='/dashboard') Dashboard
+      a(href='/events') Events
+      if signedIn
+        a(href='/signout') Sign Out
+      else
+        a(href='/login') Login
 
-    main
+    main.content
       block content
+        p
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pellentesque auctor turpis, id fermentum urna. Praesent ex ex, pulvinar non est eu, tincidunt pharetra risus. Praesent porttitor lacus eu sapien ullamcorper elementum. Vivamus ultrices blandit justo non consectetur. Nunc at metus id metus malesuada imperdiet. Vestibulum accumsan, ex sit amet imperdiet facilisis, mi dui semper neque, a finibus orci erat eget urna. Integer gravida nulla sit amet egestas euismod. Aenean at felis eget est rutrum lacinia in in ipsum. Donec ac eros varius, ullamcorper augue ac, suscipit turpis. Duis suscipit pellentesque neque, eu pretium erat feugiat ut.
+
+          Sed eget finibus nunc. Pellentesque blandit suscipit est, nec condimentum sem ultrices sit amet. Aenean vitae accumsan enim. Mauris mauris diam, tincidunt quis iaculis at, vehicula lacinia dui. Cras a sapien semper, dictum nunc sit amet, fringilla massa. Ut nisi odio, eleifend a ultrices pellentesque, bibendum in orci. Fusce imperdiet eu mauris nec aliquet.
+
+          Vestibulum nec vestibulum felis, a tempus orci. Suspendisse sit amet molestie odio. Fusce ut turpis semper, pretium tellus vitae, feugiat justo. Donec id lectus metus. Aenean ex nunc, ultricies sit amet odio eget, convallis varius dui. Cras laoreet vestibulum nisl vitae dapibus. Nulla a sem sapien. Maecenas rutrum mauris eu lorem eleifend, quis interdum lacus rhoncus. Sed felis odio, lobortis id ante non, lacinia ultrices nibh. Mauris fermentum nec elit eu pharetra. Aliquam euismod malesuada metus in facilisis. Nullam rhoncus, augue semper egestas vehicula, nibh mi semper diam, non vulputate turpis magna quis mauris. Praesent iaculis nibh ut odio tincidunt faucibus. Donec iaculis augue eu mattis consequat.
+
+          Nullam commodo eros quis finibus eleifend. Proin commodo mollis diam, non luctus nunc tempus quis. In hac habitasse platea dictumst. Donec ultricies dolor quis urna dignissim lobortis. Aliquam placerat suscipit urna at egestas. Donec molestie erat nec maximus vehicula. Aenean sit amet molestie sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi consectetur a velit nec tristique. Suspendisse pharetra velit lectus, vel volutpat turpis vulputate sit amet. Vestibulum mollis ultricies lobortis. Vivamus in bibendum quam. Pellentesque eu nisl non purus dignissim dapibus. Donec placerat tristique nisl at iaculis.
+
+          Vestibulum condimentum et ex non feugiat. Morbi quam sapien, tincidunt sed eros quis, tincidunt tempus quam. Quisque elit tellus, rutrum vel finibus ac, iaculis ut lectus. Pellentesque pharetra risus ac bibendum efficitur. Curabitur tincidunt lorem quam, nec consectetur magna cursus at. Cras diam lectus, vehicula et auctor eu, placerat at justo. Fusce lorem nisi, porta at ullamcorper vel, tempus sit amet ante. Nulla sed quam eget nulla maximus pellentesque in vel tortor.
