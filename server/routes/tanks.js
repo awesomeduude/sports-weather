@@ -5,7 +5,7 @@ const Tank = require('../models/tank')
 const router = express.Router()
 
 router.get('/', (req,res) => {
-  res.redirect('/login')
+  res.redirect('/signup')
 })
 
 router.post('/tanks', (req,res) => {

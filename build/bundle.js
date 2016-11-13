@@ -49,6 +49,7 @@
 	var base = __webpack_require__(1);
 	var nav = __webpack_require__(5);
 	var login = __webpack_require__(7);
+	var normalize = __webpack_require__(9);
 	console.log('asdf');
 
 /***/ },
@@ -69,6 +70,13 @@
 /***/ },
 /* 6 */,
 /* 7 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 8 */,
+/* 9 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
