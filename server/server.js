@@ -5,8 +5,6 @@ const validator = require('express-validator')
 const path = require('path')
 const passport = require('passport')
 
-const { database } = require('./keys')
-
 const tanks = require('./routes/tanks')
 const signup = require('./routes/signup')
 const login = require('./routes/login')
@@ -31,7 +29,10 @@ app.use('/', signup)
 app.use('/', login)
 app.use('/', dashboard)
 
-mongoose.connect(process.env.MONGODB_URI || require('./keys').database)
+if (!process.env.MONGODB_URI){
+  const { database } = require('./keys')
+}
+mongoose.connect(process.env.MONGODB_URI || database)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('***************Listening on port 3000***************');
