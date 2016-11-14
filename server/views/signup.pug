@@ -3,8 +3,8 @@ extends layout.pug
 block content
   .login
     h1 Signup
-    .errors
-      if errors
+    if errors
+      .errors
         each err in errors
           p= err.msg
     form(method='post', action='/signup')

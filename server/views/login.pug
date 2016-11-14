@@ -2,8 +2,8 @@ extends layout.pug
 block content
   .login
     h1 Login
-    .errors
-      if error
+    if error
+      .errors
         p= error
     form(method='post', action='/login')
       fieldset
