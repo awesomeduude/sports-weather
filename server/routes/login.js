@@ -15,13 +15,13 @@ passport.use(new LocalStrategy({
 }, (email, password, done) => {
 
   User.getUserByEmail(email, (err, user) => {
-    if (err) throw error
+    if (err) throw err
     if (!user) {
       console.log('Unknown user')
       return done(null, false, {error: "Unknown User"})
   }
   User.comparePassword(password, user.password , (err, isMatch) => {
-      if(err) throw error
+      if(err) throw err
       if(isMatch) {
         return done(null, user)
       }
@@ -40,29 +40,24 @@ passport.deserializeUser((id, done) => {
     done(err, user)
   })
 })
-router.post('/login',
-  passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login'}),
-  (req,res) => {
-    console.log('asdf')
-    res.redirect('/dashboard')
-  }
-)
+// router.post('/login',
+//   passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login'}),
+//   (req,res) => {
+//     console.log('asdf')
+//     res.redirect('/dashboard')
+//   }
+// )
 router.post('/login', function(req, res, next) {
+
   passport.authenticate('local', function(err, user, info) {
-    if (err) {
-      return res.render('login.pug', {error: err})
-    }
-    // Redirect if it fails
-    if (!user) {
-      return res.render('/login', {error:err})
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err)
-      }
-      // Redirect if it succeeds
+    console.log('userr ',user)
+    if (!user){
+      console.log('message: ',info.error)
+      return res.render('login.pug', {error:info.error})
+    } else{
       return res.redirect('/dashboard')
-    })
+    }
+
   })(req, res, next)
 })
 

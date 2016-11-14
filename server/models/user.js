@@ -30,7 +30,6 @@ module.exports.createUser = (newUser, callback) => {
 
 module.exports.getUserByEmail = (email, callback) => {
   const query = {email}
-  console.log(query)
   User.findOne(query, callback)
 }
 

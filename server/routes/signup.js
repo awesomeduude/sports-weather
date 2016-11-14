@@ -19,16 +19,14 @@ router.post('/signup', (req,res) => {
   req.checkBody('cpassword', 'Passwords do not match').equals(password)
 
   const errors = req.validationErrors()
-  
+
   if (errors) {
     res.render('signup.pug',{errors,name,email})
   } else {
       const newUser = new User({name, email, password})
 
       User.createUser(newUser, (err, user) => {
-        if(err) throw error
-
-        console.log(user);
+        if(err) throw error;
       })
 
       res.redirect('/login')
