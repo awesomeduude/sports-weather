@@ -40,22 +40,17 @@ passport.deserializeUser((id, done) => {
     done(err, user)
   })
 })
-// router.post('/login',
-//   passport.authenticate('local', {successRedirect: '/dashboard', failureRedirect: '/login'}),
-//   (req,res) => {
-//     console.log('asdf')
-//     res.redirect('/dashboard')
-//   }
-// )
 router.post('/login', function(req, res, next) {
 
-  passport.authenticate('local', function(err, user, info) {
+  passport.authenticate('local', {session:true},function(err, user, info) {
     console.log('userr ',user)
     if (!user){
       console.log('message: ',info.error)
       return res.render('login.pug', {error:info.error})
     } else{
-      return res.redirect('/dashboard')
+      req.logIn(user, (err) => {
+        return res.redirect('/dashboard')
+      })
     }
 
   })(req, res, next)
