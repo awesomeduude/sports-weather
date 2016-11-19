@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
-
+// TODO: Destructure schema and model from mongoose
 
 const userSchema = mongoose.Schema({
 
@@ -13,7 +13,15 @@ const userSchema = mongoose.Schema({
   },
   password: {
     type: String
-  }
+  },
+  events: [
+    {
+      date: String,
+      title: String,
+      description: String,
+      city: String
+    }
+  ]
 })
 
 const User = module.exports = mongoose.model('User', userSchema)
@@ -23,8 +31,17 @@ module.exports.createUser = (newUser, callback) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {
         newUser.password = hash
+        newUser.events = []
         newUser.save(callback)
     });
+  });
+}
+module.exports.addEvent = (email, eventData) => {
+  const query = {email}
+  User.findOne(query, (err,user) => {
+    user.events.push(eventData)
+    console.log(user);
+    user.save()
   });
 }
 

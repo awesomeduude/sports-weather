@@ -10,6 +10,7 @@ const tanks = require('./routes/tanks')
 const signup = require('./routes/signup')
 const login = require('./routes/login')
 const dashboard = require('./routes/dashboard')
+const events = require('./routes/events')
 
 const app = express()
 
@@ -42,6 +43,7 @@ app.use('/', tanks)
 app.use('/', signup)
 app.use('/', login)
 app.use('/', dashboard)
+app.use('/', events)
 
 //if (!process.env.MONGODB_URI){
   const { database } = require('./keys')
