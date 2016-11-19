@@ -11,6 +11,7 @@ const signup = require('./routes/signup')
 const login = require('./routes/login')
 const dashboard = require('./routes/dashboard')
 const events = require('./routes/events')
+const signout = require('./routes/signout')
 
 const app = express()
 
@@ -44,6 +45,7 @@ app.use('/', signup)
 app.use('/', login)
 app.use('/', dashboard)
 app.use('/', events)
+app.use('/', signout)
 
 //if (!process.env.MONGODB_URI){
   const { database } = require('./keys')

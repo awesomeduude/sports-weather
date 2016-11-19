@@ -4,7 +4,8 @@ const User = require('../models/user')
 
 router.get('/events', (req,res) => {
   res.render('events.pug', {
-    events: req.user.events
+    events: req.user.events,
+    signedIn: req.user ? true : false
   })
 })
 router.post('/events', (req,res) => {

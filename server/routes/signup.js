@@ -4,6 +4,7 @@ const User = require('../models/user')
 
 const router = express.Router()
 
+
 router.get('/signup', (req,res) => {
   res.render('signup.pug')
 })

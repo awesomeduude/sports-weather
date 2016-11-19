@@ -5,8 +5,11 @@ const { Strategy: LocalStrategy } = require('passport-local')
 
 const router = express.Router()
 
+
 router.get('/login', (req,res) => {
-  res.render('login.pug')
+  res.render('login.pug', {
+    signedIn: req.user ? true : false
+  })
 })
 
 passport.use(new LocalStrategy({
@@ -49,6 +52,7 @@ router.post('/login', function(req, res, next) {
       return res.render('login.pug', {error:info.error})
     } else{
       req.logIn(user, (err) => {
+        global.signedIn = true
         return res.redirect('/dashboard')
       })
     }

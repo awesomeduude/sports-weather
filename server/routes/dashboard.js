@@ -10,7 +10,7 @@ function loggedIn(req, res, next) {
     }
 }
 router.get('/dashboard', loggedIn, (req,res) => {
-    res.render('dashboard.pug', {name:req.user.name, signedIn: true})
+    res.render('dashboard.pug', {name:req.user.name, signedIn: req.user ? true : false})
 })
 
 module.exports = router
