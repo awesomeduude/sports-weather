@@ -50,7 +50,12 @@
 	var nav = __webpack_require__(5);
 	var login = __webpack_require__(7);
 	var normalize = __webpack_require__(9);
+	var events = __webpack_require__(11);
+
 	console.log('asdf');
+	document.getElementById('event-btn').onclick = function () {
+	  document.querySelector('.event-table ~ form').style.display = 'block';
+	};
 
 /***/ },
 /* 1 */
@@ -77,6 +82,13 @@
 /***/ },
 /* 8 */,
 /* 9 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 10 */,
+/* 11 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

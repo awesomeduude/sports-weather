@@ -5,7 +5,7 @@ block content
     if error
       .errors
         p= error
-    form(method='post', action='/login')
+    form(class='form',method='post', action='/login')
       fieldset
         label(for='email') Email
         input(type='text' id='email' name='email' placeholder='Enter Email' value=email)
