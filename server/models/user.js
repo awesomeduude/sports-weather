@@ -16,6 +16,7 @@ const userSchema = mongoose.Schema({
   },
   events: [
     {
+      id: Number,
       date: String,
       title: String,
       description: String,
@@ -38,11 +39,23 @@ module.exports.createUser = (newUser, callback) => {
 }
 module.exports.addEvent = (email, eventData) => {
   const query = {email}
+  eventData.id = Math.random()
   User.findOne(query, (err,user) => {
     user.events.push(eventData)
-    console.log(user);
+
     user.save()
-  });
+  })
+
+}
+module.exports.deleteEvent = (email, id, time) => {
+  const query = {email}
+  User.findOne(query, (err, user) => {
+    user.events.filter((event) => {
+      if(event.id != id && event.time!= time) {
+        return event
+      }
+    })
+  })
 }
 
 module.exports.getUserByEmail = (email, callback) => {

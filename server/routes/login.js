@@ -46,7 +46,7 @@ passport.deserializeUser((id, done) => {
 router.post('/login', function(req, res, next) {
 
   passport.authenticate('local', {session:true},function(err, user, info) {
-    console.log('userr ',user)
+
     if (!user){
       console.log('message: ',info.error)
       return res.render('login.pug', {error:info.error})

@@ -9,12 +9,24 @@ router.get('/events', (req,res) => {
   })
 })
 router.post('/events', (req,res) => {
-  const {date, title, description, city} = req.body
+  const { date, title, description, city } = req.body
   if(req.user.email) {
     User.addEvent(req.user.email,{date,title,description,city})
-    return res.redirect('/events')
-  }
-  return res.send('failed')
+    setTimeout(() => {
+      return res.redirect('/events')
+    }, 100)
 
+  } else{
+    return res.send('failed')
+  }
+})
+//DELETE
+router.delete('/events', (req,res) => {
+  const { id, time } = req.body.eventData
+  if (req.user.email){
+    User.deleteEvent(email, id, time)
+  } else{
+    return res.send('failed')
+  }
 })
 module.exports = router
