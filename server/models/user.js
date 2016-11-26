@@ -59,6 +59,7 @@ module.exports.deleteEvent = (email, id, time) => {
     user.events = temp
     user.save()
     console.log('afffter', temp);
+    return user.events
   })
 }
 

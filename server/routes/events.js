@@ -26,17 +26,21 @@ router.post('/events', (req,res) => {
     return res.send('failed')
   }
 })
-//DELETE
 router.delete('/events', (req,res) => {
   const { id, time } = req.body
   const { email } = req.user
 
   console.log('delete received', id, time, email);
   if (email){
-    User.deleteEvent(email, id, time)
+    const events = User.deleteEvent(email, id, time)
+
     setTimeout(() => {
-      return res.redirect('/events')
+      console.log('BEFORREE METHOODD', req.method);
+      req.method = 'GET'
+      console.log('aFTERRR METHOODD', req.method);
+      res.send({redirect:'/events'})
     }, 100)
+
   } else{
     return res.send('failed')
   }

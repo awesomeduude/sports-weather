@@ -72,14 +72,26 @@
 	      console.log('id', id);
 	      console.log('time', time);
 
-	      axios({
-	        method: 'delete',
-	        url: '/events',
+	      axios.delete('/events', {
 	        data: {
 	          id: id,
 	          time: time
 	        }
+	      }).then(function (response) {
+	        window.location.href = '/events';
+	      }).catch(function (error) {
+	        console.log(error);
 	      });
+
+	      // axios({
+	      //   method: 'delete',
+	      //   url: '/events',
+	      //   data: {
+	      //
+	      //     id:id,
+	      //     time
+	      //   }
+	      // })
 	    }
 	  };
 	});
