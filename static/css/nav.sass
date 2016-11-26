@@ -3,8 +3,8 @@
 $nav-width: 10em
 
 label[for='nav-trigger']
-  position: relative
-  left: 0
+
+  +position(relative null null null 0)
   +transition()
   padding-left: 1.25em
   margin: 1em
@@ -17,9 +17,7 @@ label[for='nav-trigger']
   &:before
     display: inline-block
     content: ""
-    position: absolute
-    left: 0
-    top: 0.25em
+    +position(absolute, .25em null null 0)
     width: 2em
     height: 0.15em
     background: black
@@ -33,12 +31,7 @@ label[for='nav-trigger']
 
   background: #333
 
-  position: fixed
-  left: 0
-  top: 0
-  bottom: 0
-  z-index: 0
-
+  +position(fixed, 0 null 0 0)
   width: $nav-width
 
 

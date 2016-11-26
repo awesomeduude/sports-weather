@@ -9,17 +9,17 @@ body {
   font-weight: 300; }
 
 .content {
-  position: absolute;
   -webkit-transition: all 0.15s ease-out 0s;
   -moz-transition: all 0.15s ease-out 0s;
   transition: all 0.15s ease-out 0s;
   z-index: 1;
   background: white;
   padding: 1em;
+  position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   bottom: 0;
-  right: 0; }
+  left: 0; }
 
 h1 {
   text-align: center; }
@@ -28,7 +28,6 @@ h1, h2 {
   font-weight: inherit; }
 label[for='nav-trigger'] {
   position: relative;
-  left: 0;
   -webkit-transition: all 0.15s ease-out 0s;
   -moz-transition: all 0.15s ease-out 0s;
   transition: all 0.15s ease-out 0s;
@@ -43,8 +42,8 @@ label[for='nav-trigger'] {
     display: inline-block;
     content: "";
     position: absolute;
-    left: 0;
     top: 0.25em;
+    left: 0;
     width: 2em;
     height: 0.15em;
     background: black;
@@ -56,10 +55,9 @@ label[for='nav-trigger'] {
   list-style: none;
   background: #333;
   position: fixed;
-  left: 0;
   top: 0;
   bottom: 0;
-  z-index: 0;
+  left: 0;
   width: 10em;
   flex-direction: column;
   justify-content: flex-start;
@@ -124,8 +122,8 @@ label[for='nav-trigger'] {
   .form .errors {
     border-radius: 5px;
     position: relative;
-    box-sizing: border-box;
     left: 50%;
+    box-sizing: border-box;
     transform: translateX(-50%);
     background-color: rgba(220, 20, 60, 0.5);
     padding: 1em;
@@ -528,7 +526,9 @@ template {
   border: 2px solid #0099cc;
   color: #eee;
   margin: 1rem;
-  transition: all .3s;
+  -webkit-transition: all 0.15s ease-out 0s;
+  -moz-transition: all 0.15s ease-out 0s;
+  transition: all 0.15s ease-out 0s;
   border-radius: 2px; }
   .add-event:hover {
     background-color: #fff;
