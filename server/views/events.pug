@@ -5,6 +5,7 @@ block content
   table(class='event-table' cellspacing="0")
     thead
       tr
+        th Ids
         th Events
         th Time
         th City
@@ -12,10 +13,13 @@ block content
     tbody
       each event in events
         tr
+          td= event.id
           td= event.title
           td= event.date
           td= event.city
           td= event.description
+          td
+            i.fa.fa-trash-o
 
   button.add-event#event-btn Add Event
 

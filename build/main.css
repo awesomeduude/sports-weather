@@ -506,11 +506,18 @@ template {
     padding: .5em;
     border-bottom: 2px solid #0099cc;
     color: #0099cc; }
+    .event-table th:first-child {
+      display: none; }
   .event-table td {
     padding: 1em;
     border-bottom: 1px solid #99BFCC; }
+    .event-table td:first-child {
+      display: none; }
   .event-table ~ form {
     display: none; }
+  .event-table .fa {
+    cursor: pointer;
+    font-size: 1.2em; }
 
 .add-event {
   position: relative;

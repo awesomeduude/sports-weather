@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const validator = require('express-validator')
+const expressValidator = require('express-validator')
 const path = require('path')
 const passport = require('passport')
 const session = require('express-session')
@@ -12,6 +12,7 @@ const login = require('./routes/login')
 const dashboard = require('./routes/dashboard')
 const events = require('./routes/events')
 const signout = require('./routes/signout')
+const { getUserByEmail } = require('./models/user')
 
 const app = express()
 
@@ -23,7 +24,24 @@ app.set('views', path.join(__dirname,'/views'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-app.use(validator())
+app.use(expressValidator({
+  customValidators: {
+    userDoesNotExist: function(email) {
+
+      return getUserByEmail(email, (err, user) => {
+
+        if(!user){
+          console.log('**************NO USEr')
+          return true
+        } else{
+          console.log('*********>>>>>>>>YES USER')
+          return false
+        }
+      })
+    }
+  }
+}))
+
 
 var sess = {
   secret: 'keyboard cat',

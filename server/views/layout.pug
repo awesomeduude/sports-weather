@@ -1,7 +1,9 @@
 html
   head
     title Sports Weather - #{title}
+    script(src="https://use.fontawesome.com/fb0a4150cd.js")
     link(rel='stylesheet', href='./build/main.css')
+
   body
     input(type='checkBox' class='nav-trigger' id='nav-trigger')
     label(for='nav-trigger')
@@ -16,4 +18,4 @@ html
 
     main.content
       block content
-      script(type='text/javascript' src='./build/bundle.js')
+    script(type='text/javascript' src='./build/bundle.js')

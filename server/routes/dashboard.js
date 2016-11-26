@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 
 function loggedIn(req, res, next) {
-  console.log(req.user);
     if (req.user) {
         next();
     } else {

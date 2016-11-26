@@ -20,7 +20,7 @@ passport.use(new LocalStrategy({
   User.getUserByEmail(email, (err, user) => {
     if (err) throw err
     if (!user) {
-      console.log('Unknown user')
+
       return done(null, false, {error: "Unknown User"})
   }
   User.comparePassword(password, user.password , (err, isMatch) => {
@@ -28,7 +28,7 @@ passport.use(new LocalStrategy({
       if(isMatch) {
         return done(null, user)
       }
-      console.log('invalid password')
+
       return done(null, false, {error: "Invalid Password"})
 
     })
@@ -48,7 +48,6 @@ router.post('/login', function(req, res, next) {
   passport.authenticate('local', {session:true},function(err, user, info) {
 
     if (!user){
-      console.log('message: ',info.error)
       return res.render('login.pug', {error:info.error})
     } else{
       req.logIn(user, (err) => {

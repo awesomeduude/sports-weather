@@ -10,12 +10,11 @@ router.get('/signup', (req,res) => {
 })
 router.post('/signup', (req,res) => {
   const { name, email, password, cpassword } = req.body
-  console.log(name + ' ' + password)
-
 
   req.checkBody('name', 'Name is Required').notEmpty()
   req.checkBody('email', 'Email is Required').notEmpty()
   req.checkBody('email', 'Email is not valid').isEmail()
+  //req.checkBody('email', 'User already exists').userDoesNotExist(email)
   req.checkBody('password', 'Password is Required').notEmpty()
   req.checkBody('cpassword', 'Passwords do not match').equals(password)
 
