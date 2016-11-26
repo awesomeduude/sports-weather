@@ -6,46 +6,39 @@ const events = require('../css/events.sass')
 
 const axios = require('axios')
 
-document.getElementById('event-btn').onclick = () => {
-  document.querySelector('.event-table ~ form').style.display = 'block'
+const eventBtn = document.getElementById('event-btn');
+if (eventBtn) {
+  eventBtn.onclick = () => {
+    document.querySelector('.event-table ~ form').style.display = 'block'
+  }
 }
 
 const deleteLinks = document.querySelectorAll('.fa-trash-o');
 
-Array.from(deleteLinks).forEach((trashcan) => {
-  trashcan.onclick = function(e) {
-      if (!confirm('Are you sure you want to delete this event?')) {
-          e.preventDefault();
-      } else {
-        console.log('to delete event');
-        const event = trashcan.parentElement.parentElement
-        const id = event.children[0].innerText
-        const time = event.children[2].innerText
-        console.log('id', id);
-        console.log('time', time);
+if (deleteLinks.length) {
+  Array.from(deleteLinks).forEach((trashcan) => {
+    trashcan.onclick = function(e) {
+        if (!confirm('Are you sure you want to delete this event?')) {
+            e.preventDefault();
+        } else {
+          const event = trashcan.parentElement.parentElement
+          const id = event.children[0].innerText
+          const time = event.children[2].innerText
 
-        axios.delete('/events', {
-          data: {
-            id,
-            time
-          }
-        })
-        .then(function (response) {
-          window.location.href = '/events'
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          axios.delete('/events', {
+            data: {
+              id,
+              time
+            }
+          })
+          .then((res) => {
+            window.location.href = '/events'
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
-        // axios({
-        //   method: 'delete',
-        //   url: '/events',
-        //   data: {
-        //
-        //     id:id,
-        //     time
-        //   }
-        // })
-      }
-  }
-})
+        }
+    }
+  })
+}

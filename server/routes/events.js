@@ -30,15 +30,13 @@ router.delete('/events', (req,res) => {
   const { id, time } = req.body
   const { email } = req.user
 
-  console.log('delete received', id, time, email);
   if (email){
     const events = User.deleteEvent(email, id, time)
 
     setTimeout(() => {
-      console.log('BEFORREE METHOODD', req.method);
       req.method = 'GET'
-      console.log('aFTERRR METHOODD', req.method);
       res.send({redirect:'/events'})
+
     }, 100)
 
   } else{

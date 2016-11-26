@@ -12,7 +12,7 @@ const login = require('./routes/login')
 const dashboard = require('./routes/dashboard')
 const events = require('./routes/events')
 const signout = require('./routes/signout')
-const { getUserByEmail } = require('./models/user')
+const User = require('./models/user')
 
 const app = express()
 
@@ -28,7 +28,7 @@ app.use(expressValidator({
   customValidators: {
     userDoesNotExist: function(email) {
 
-      return getUserByEmail(email, (err, user) => {
+      return User.getUserByEmail(email, (err, user) => {
 
         if(!user){
           console.log('**************NO USEr')
@@ -65,10 +65,9 @@ app.use('/', dashboard)
 app.use('/', events)
 app.use('/', signout)
 
-//if (!process.env.MONGODB_URI){
-  //const { database } = require('./keys')
-//}
-mongoose.connect(process.env.MONGODB_URI)// || database)
+
+const { database } = require('./keys')
+mongoose.connect(process.env.MONGODB_URI || database)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('***************Listening on port 3000***************');

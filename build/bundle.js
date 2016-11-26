@@ -54,47 +54,39 @@
 
 	var axios = __webpack_require__(13);
 
-	document.getElementById('event-btn').onclick = function () {
-	  document.querySelector('.event-table ~ form').style.display = 'block';
-	};
+	var eventBtn = document.getElementById('event-btn');
+	if (eventBtn) {
+	  eventBtn.onclick = function () {
+	    document.querySelector('.event-table ~ form').style.display = 'block';
+	  };
+	}
 
 	var deleteLinks = document.querySelectorAll('.fa-trash-o');
 
-	Array.from(deleteLinks).forEach(function (trashcan) {
-	  trashcan.onclick = function (e) {
-	    if (!confirm('Are you sure you want to delete this event?')) {
-	      e.preventDefault();
-	    } else {
-	      console.log('to delete event');
-	      var event = trashcan.parentElement.parentElement;
-	      var id = event.children[0].innerText;
-	      var time = event.children[2].innerText;
-	      console.log('id', id);
-	      console.log('time', time);
+	if (deleteLinks.length) {
+	  Array.from(deleteLinks).forEach(function (trashcan) {
+	    trashcan.onclick = function (e) {
+	      if (!confirm('Are you sure you want to delete this event?')) {
+	        e.preventDefault();
+	      } else {
+	        var event = trashcan.parentElement.parentElement;
+	        var id = event.children[0].innerText;
+	        var time = event.children[2].innerText;
 
-	      axios.delete('/events', {
-	        data: {
-	          id: id,
-	          time: time
-	        }
-	      }).then(function (response) {
-	        window.location.href = '/events';
-	      }).catch(function (error) {
-	        console.log(error);
-	      });
-
-	      // axios({
-	      //   method: 'delete',
-	      //   url: '/events',
-	      //   data: {
-	      //
-	      //     id:id,
-	      //     time
-	      //   }
-	      // })
-	    }
-	  };
-	});
+	        axios.delete('/events', {
+	          data: {
+	            id: id,
+	            time: time
+	          }
+	        }).then(function (res) {
+	          window.location.href = '/events';
+	        }).catch(function (err) {
+	          console.log(err);
+	        });
+	      }
+	    };
+	  });
+	}
 
 /***/ },
 /* 1 */
