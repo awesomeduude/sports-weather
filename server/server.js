@@ -66,9 +66,9 @@ app.use('/', events)
 app.use('/', signout)
 
 //if (!process.env.MONGODB_URI){
-  const { database } = require('./keys')
+  //const { database } = require('./keys')
 //}
-mongoose.connect(process.env.MONGODB_URI || database)
+mongoose.connect(process.env.MONGODB_URI)// || database)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('***************Listening on port 3000***************');
