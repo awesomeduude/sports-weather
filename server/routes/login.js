@@ -17,6 +17,7 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 }, (email, password, done) => {
 
+
   User.getUserByEmail(email, (err, user) => {
     if (err) throw err
     if (!user) {
@@ -44,14 +45,19 @@ passport.deserializeUser((id, done) => {
   })
 })
 router.post('/login', function(req, res, next) {
-
+  if (!req.body.email){
+    return res.render('login.pug', {error: 'Please enter an email'})
+  }
+  if (!req.body.password) {
+    return res.render('login.pug', {error: 'Please enter a password'})
+  }
   passport.authenticate('local', {session:true},function(err, user, info) {
 
     if (!user){
       return res.render('login.pug', {error:info.error})
     } else{
       req.logIn(user, (err) => {
-        global.signedIn = true
+
         return res.redirect('/dashboard')
       })
     }

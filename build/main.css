@@ -119,22 +119,23 @@ label[for='nav-trigger'] {
     color: inherit;
     border: none;
     cursor: pointer; }
-  .form .errors {
-    border-radius: 5px;
-    position: relative;
-    left: 50%;
-    box-sizing: border-box;
-    transform: translateX(-50%);
-    background-color: rgba(220, 20, 60, 0.5);
-    padding: 1em;
+
+.errors {
+  border-radius: 5px;
+  position: relative;
+  left: 50%;
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  background-color: rgba(220, 20, 60, 0.5);
+  padding: 1em;
+  width: 20em;
+  margin-bottom: 1em; }
+  .errors p {
+    color: #990000;
+    text-align: left;
+    display: inline-block;
     width: 20em;
-    margin-bottom: 1em; }
-    .form .errors p {
-      color: #990000;
-      text-align: left;
-      display: inline-block;
-      width: 20em;
-      margin: .5em; }
+    margin: .5em; }
 /*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Change the default font family in all browsers (opinionated).
