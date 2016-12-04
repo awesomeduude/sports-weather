@@ -46,10 +46,10 @@
 
 	'use strict';
 
-	var base = __webpack_require__(1);
-	var nav = __webpack_require__(5);
-	var login = __webpack_require__(7);
-	var normalize = __webpack_require__(9);
+	var normalize = __webpack_require__(1);
+	var base = __webpack_require__(5);
+	var nav = __webpack_require__(7);
+	var login = __webpack_require__(9);
 	var events = __webpack_require__(11);
 
 	var axios = __webpack_require__(13);

@@ -1,142 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300,700);* {
-  box-sizing: border-box; }
-
-body {
-  color: #222;
-  font-family: "Roboto", Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;
-  font-weight: 300; }
-
-.content {
-  -webkit-transition: all 0.15s ease-out 0s;
-  -moz-transition: all 0.15s ease-out 0s;
-  transition: all 0.15s ease-out 0s;
-  z-index: 1;
-  background: white;
-  padding: 1em;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
-h1 {
-  text-align: center; }
-
-h1, h2 {
-  font-weight: inherit; }
-label[for='nav-trigger'] {
-  position: relative;
-  -webkit-transition: all 0.15s ease-out 0s;
-  -moz-transition: all 0.15s ease-out 0s;
-  transition: all 0.15s ease-out 0s;
-  padding-left: 1.25em;
-  margin: 1em;
-  cursor: pointer;
-  z-index: 2;
-  display: inline-block;
-  height: 2em;
-  width: 2em; }
-  label[for='nav-trigger']:before {
-    display: inline-block;
-    content: "";
-    position: absolute;
-    top: 0.25em;
-    left: 0;
-    width: 2em;
-    height: 0.15em;
-    background: black;
-    box-shadow: 0 0.65em 0 0 black, 0 1.3em 0 0 black; }
-
-.navigation {
-  box-sizing: border-box;
-  display: flex;
-  list-style: none;
-  background: #333;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 10em;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 2em 1em; }
-  .navigation a {
-    text-decoration: none;
-    color: #ddd;
-    padding: .75em;
-    margin: .25em; }
-    .navigation a:hover {
-      color: #66cc00; }
-
-.nav-trigger {
-  display: none; }
-  .nav-trigger:checked ~ label[for='nav-trigger'] {
-    left: 10em; }
-  .nav-trigger:checked ~ .content {
-    left: 10em; }
-.login {
-  text-align: center; }
-  .login h1 {
-    text-align: center;
-    font-size: 3em; }
-
-.form {
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 1.3em;
-  background-color: rgba(238, 238, 238, 0.5);
-  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.2);
-  width: 20em;
-  text-align: center;
-  font-size: 1rem; }
-  .form label {
-    text-align: left;
-    display: block;
-    margin-bottom: .3em; }
-  .form fieldset {
-    margin: 0 0 1.2rem 0;
-    padding: 0;
-    border: none;
-    width: 100%; }
-    .form fieldset input {
-      width: 100%;
-      font-size: .9rem;
-      padding: .5em .7em;
-      line-height: 1;
-      border-radius: 4px;
-      border: 1px solid #999; }
-      .form fieldset input:focus {
-        outline: none;
-        border: 1px solid #72e600; }
-  .form button {
-    font-size: .9rem;
-    border-radius: 5px;
-    padding: .75em 1.5em;
-    background-color: #72e600;
-    color: inherit;
-    border: none;
-    cursor: pointer; }
-
-.errors {
-  border-radius: 5px;
-  position: relative;
-  left: 50%;
-  box-sizing: border-box;
-  transform: translateX(-50%);
-  background-color: rgba(220, 20, 60, 0.5);
-  padding: 1em;
-  width: 20em;
-  margin-bottom: 1em; }
-  .errors p {
-    color: #990000;
-    text-align: left;
-    display: inline-block;
-    width: 20em;
-    margin: .5em; }
-/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,700);/*! normalize.css v5.0.0 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Change the default font family in all browsers (opinionated).
  * 2. Correct the line height in all browsers.
@@ -498,6 +360,149 @@ template {
  */
 [hidden] {
   display: none; }
+* {
+  box-sizing: border-box; }
+
+body {
+  color: #222;
+  font-family: "Roboto", Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-weight: 300; }
+
+.content {
+  -webkit-transition: all 0.15s ease-out 0s;
+  -moz-transition: all 0.15s ease-out 0s;
+  transition: all 0.15s ease-out 0s;
+  z-index: 1;
+  background: white;
+  padding: 1em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+h1 {
+  text-align: center; }
+
+h1, h2 {
+  font-weight: inherit; }
+
+button:active,
+button:focus {
+  border: none;
+  outline: none; }
+label[for='nav-trigger'] {
+  position: relative;
+  -webkit-transition: all 0.15s ease-out 0s;
+  -moz-transition: all 0.15s ease-out 0s;
+  transition: all 0.15s ease-out 0s;
+  padding-left: 1.25em;
+  margin: 1em;
+  cursor: pointer;
+  z-index: 2;
+  display: inline-block;
+  height: 2em;
+  width: 2em; }
+  label[for='nav-trigger']:before {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    top: 0.25em;
+    left: 0;
+    width: 2em;
+    height: 0.15em;
+    background: black;
+    box-shadow: 0 0.65em 0 0 black, 0 1.3em 0 0 black; }
+
+.navigation {
+  box-sizing: border-box;
+  display: flex;
+  list-style: none;
+  background: #333;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 10em;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2em 1em; }
+  .navigation a {
+    text-decoration: none;
+    color: #ddd;
+    padding: .75em;
+    margin: .25em; }
+    .navigation a:hover {
+      color: #66cc00; }
+
+.nav-trigger {
+  display: none; }
+  .nav-trigger:checked ~ label[for='nav-trigger'] {
+    left: 10em; }
+  .nav-trigger:checked ~ .content {
+    left: 10em; }
+.login {
+  text-align: center; }
+  .login h1 {
+    text-align: center;
+    font-size: 3em; }
+
+.form {
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1.3em;
+  background-color: rgba(238, 238, 238, 0.5);
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.2);
+  width: 20em;
+  text-align: center;
+  font-size: 1rem; }
+  .form label {
+    text-align: left;
+    display: block;
+    margin-bottom: .3em; }
+  .form fieldset {
+    margin: 0 0 1.2rem 0;
+    padding: 0;
+    border: none;
+    width: 100%; }
+    .form fieldset input {
+      width: 100%;
+      font-size: .9rem;
+      padding: .5em .7em;
+      line-height: 1;
+      border-radius: 4px;
+      border: 1px solid #999; }
+      .form fieldset input:focus {
+        outline: none;
+        border: 1px solid #72e600; }
+  .form button {
+    font-size: .9rem;
+    border-radius: 5px;
+    padding: .75em 1.5em;
+    background-color: #72e600;
+    color: inherit;
+    border: none;
+    cursor: pointer; }
+
+.errors {
+  border-radius: 5px;
+  position: relative;
+  left: 50%;
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  background-color: rgba(220, 20, 60, 0.5);
+  padding: 1em;
+  width: 20em;
+  margin-bottom: 1em; }
+  .errors p {
+    color: #990000;
+    text-align: left;
+    display: inline-block;
+    width: 20em;
+    margin: .5em; }
 .event-table {
   margin: 0 auto; }
   .event-table th {
