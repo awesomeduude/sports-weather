@@ -6,6 +6,9 @@ const User = require('../models/user')
 
 const router = express.Router()
 
+router.get('/', (req,res) => {
+  res.redirect('/signup')
+})
 
 router.get('/signup', (req,res) => {
   res.render('signup.pug')
