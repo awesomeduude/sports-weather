@@ -12,50 +12,32 @@ router.get('/login', (req,res) => {
   })
 })
 
-passport.use(new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password'
-}, (email, password, done) => {
+passport.use(User.createStrategy())
 
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-  User.getUserByEmail(email, (err, user) => {
-    if (err) throw err
-    if (!user) {
+router.post('/login',  (req, res, next) => {
+  const { email, password } = req.body
 
-      return done(null, false, {error: "Unknown User"})
+  req.checkBody('email').notEmpty()
+  req.checkBody('password').notEmpty()
+
+  const errors = req.validationErrors()
+
+  if (errors) {
+    const error = errors[0]
+    return res.render('login.pug', {error})
   }
-  User.comparePassword(password, user.password , (err, isMatch) => {
-      if(err) throw err
-      if(isMatch) {
-        return done(null, user)
-      }
 
-      return done(null, false, {error: "Invalid Password"})
-
-    })
-  })
-}))
-passport.serializeUser((user, done)=> {
-  done(null, user.id)
-})
-
-passport.deserializeUser((id, done) => {
-  User.getUserById(id, (err, user) => {
-    done(err, user)
-  })
-})
-router.post('/login', function(req, res, next) {
-  if (!req.body.email){
-    return res.render('login.pug', {error: 'Please enter an email'})
-  }
-  if (!req.body.password) {
-    return res.render('login.pug', {error: 'Please enter a password'})
-  }
-  passport.authenticate('local', {session:true},function(err, user, info) {
-
+  passport.authenticate('local', {session:true}, (err, user, info) => {
+    console.log('userr', user)
+    console.log('logging in', info);
     if (!user){
-      return res.render('login.pug', {error:info.error})
-    } else{
+      const error = info.message
+
+      return res.render('login.pug', {error})
+    } else {
       req.logIn(user, (err) => {
 
         return res.redirect('/dashboard')

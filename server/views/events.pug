@@ -22,14 +22,16 @@ block content
             i.fa.fa-trash-o
 
   button.add-event#event-btn Add Event
-
+  if error
+    .errors
+      p= error
   form(method='post', class='form', action='/events')
       fieldset
         label(for='title') Event Title
         input(type='text' id='title' name='title' placeholder='Enter Event Title' value=name)
       fieldset
         label(for='date') Date
-        input(type='text' id='date' name='date' placeholder='Enter Date')
+        input(type='text' id='date' name='date' placeholder='mm-dd-yy')
       fieldset
         label(for='description') Description
         input(type='text' id='description' name='description' placeholder='Enter a Description')

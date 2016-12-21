@@ -15,6 +15,13 @@ router.get('/events', (req,res) => {
 
 router.post('/events', (req,res) => {
   const { date, title, description, city } = req.body
+  if (!isDate(date)) {
+    return res.render('events.pug', {
+      error: 'Invalid date',
+      events: req.user.events,
+      signedIn: req.user ? true : false
+    })
+  }
   if(req.user.email) {
     User.addEvent(req.user.email,{date,title,description,city})
     setTimeout(() => {
@@ -31,17 +38,19 @@ router.delete('/events', (req,res) => {
   const { email } = req.user
 
   if (email){
-    const events = User.deleteEvent(email, id, time)
+    User.deleteEvent(email, id, time)
+    req.method = 'GET'
 
     setTimeout(() => {
-      req.method = 'GET'
-      res.send({redirect:'/events'})
-
+      return res.redirect('/events')
     }, 100)
+
 
   } else{
     return res.send('failed')
   }
-
 })
+function isDate(date) {
+  return !isNaN(Date.parse(date))
+}
 module.exports = router

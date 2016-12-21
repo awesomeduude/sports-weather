@@ -1,4 +1,6 @@
 const express = require('express')
+const passport = require('passport')
+
 const User = require('../models/user')
 
 
@@ -14,23 +16,32 @@ router.post('/signup', (req,res) => {
   req.checkBody('name', 'Name is Required').notEmpty()
   req.checkBody('email', 'Email is Required').notEmpty()
   req.checkBody('email', 'Email is not valid').isEmail()
-  //req.checkBody('email', 'User already exists').userDoesNotExist(email)
   req.checkBody('password', 'Password is Required').notEmpty()
   req.checkBody('cpassword', 'Passwords do not match').equals(password)
 
   const errors = req.validationErrors()
 
   if (errors) {
-    res.render('signup.pug',{errors,name,email})
+    console.log('validation errors', errors);
+    return res.render('signup.pug',{errors,name,email})
   } else {
       const newUser = new User({name, email, password})
 
-      User.createUser(newUser, (err, user) => {
-        if(err) throw error;
-      })
-
-      res.redirect('/login')
+      User.register(newUser, password, (err, user) => {
+        console.log('registering');
+        if (err) {
+          const errors = [{'msg': err.message}]
+          console.log('errr', err)
+          console.log('errorss', errors);
+          return res.render('signup.pug', {errors});
+        }
+        return res.redirect('/login')
+      //  passport.authenticate('local')(req, res, () => {
+      //    return res.redirect('/dashboard');
+      //  });
+   });
   }
 })
+
 
 module.exports = router

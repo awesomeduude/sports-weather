@@ -27,17 +27,27 @@ app.use(bodyParser.json())
 app.use(expressValidator({
   customValidators: {
     userDoesNotExist: function(email) {
+      // var a = null
+      // var result =  User.getUserByEmail(email, (err, user) => {
+      //   console.log(user);
+      //   if(!user){
+      //
+      //     a = true
+      //   } else{
+      //
+      //     a = false
+      //   }
+      //   console.log('THIISS IS AAAA',a);
+      //   //return a
+      // }).then(() => {
+      //   console.log('AAA AFTTTER', a);
+      //   console.log('RESULTTT',result);
+      //   return a
+      // })
+      const result = User.userExists(email)
+    //  console.log('RESSSULT',result);
+      return !result
 
-      return User.getUserByEmail(email, (err, user) => {
-
-        if(!user){
-          console.log('**************NO USEr')
-          return true
-        } else{
-          console.log('*********>>>>>>>>YES USER')
-          return false
-        }
-      })
     }
   }
 }))
