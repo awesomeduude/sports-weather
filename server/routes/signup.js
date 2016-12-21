@@ -22,17 +22,15 @@ router.post('/signup', (req,res) => {
   const errors = req.validationErrors()
 
   if (errors) {
-    console.log('validation errors', errors);
+
     return res.render('signup.pug',{errors,name,email})
   } else {
       const newUser = new User({name, email, password})
 
       User.register(newUser, password, (err, user) => {
-        console.log('registering');
+
         if (err) {
           const errors = [{'msg': err.message}]
-          console.log('errr', err)
-          console.log('errorss', errors);
           return res.render('signup.pug', {errors});
         }
         return res.redirect('/login')
