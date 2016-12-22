@@ -23,12 +23,15 @@ router.post('/events', (req,res) => {
     })
   }
   if(req.user.email) {
-    User.addEvent(req.user.email,{date,title,description,city})
-    setTimeout(() => {
+    const newEvent = {date,title,description,city}
+    const events = req.user.events.concat([newEvent])
 
-      return res.redirect('/events')
-    }, 100)
+    User.addEvent(req.user.email, newEvent)
 
+    return res.render('events.pug',  {
+      events,
+      signedIn: req.user ? true : false
+    })
   } else{
     return res.send('failed')
   }
@@ -36,15 +39,26 @@ router.post('/events', (req,res) => {
 router.delete('/events', (req,res) => {
   const { id, time } = req.body
   const { email } = req.user
+  // console.log('iddd', id);
+  // console.log('event id', req.user.events[req.user.events.length-1].id);
+  // console.log('old eventss', req.user.events);
 
-  if (email){
-    User.deleteEvent(email, id, time)
-    req.method = 'GET'
+  if (email) {
+    // const events = req.user.events.filter((event) => {
+    //   return (event.id != id)
+    // })
+    // console.log('new eventsss', events);
 
-    setTimeout(() => {
-      return res.redirect('/events')
-    }, 100)
-
+    User.deleteEvent(email, id, time).then((response) => {
+      console.log('RESPONSEE', response)
+      const events = response.events
+      console.log('response events', events);
+      return res.render('events.pug',  {
+        events,
+        error:'reloaded',
+        signedIn: req.user ? true : false
+      })
+    })
 
   } else{
     return res.send('failed')
