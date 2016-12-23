@@ -12,9 +12,6 @@ const userSchema = Schema({
     type: String,
     index: true
   },
-  password: {
-    type: String
-  },
   events: [
     {
       id: Number,
@@ -32,28 +29,31 @@ userSchema.plugin(passportLocalMongoose, {
 
 const User = module.exports = mongoose.model('User', userSchema)
 
-module.exports.addEvent = (email, eventData) => {
+module.exports.addEvent = (email, eventData, callback) => {
   const query = {email}
   eventData.id = Math.random()
   User.findOne(query, (err,user) => {
     user.events.push(eventData)
-
     user.save()
+  }).then((response) => {
+    callback()
   })
 
 }
-module.exports.deleteEvent = (email, id, time) => {
+module.exports.deleteEvent = (email, id, time, callback) => {
   const query = {email}
 
   User.findOne(query, (err,user) => {
-    let { events } = user
+      let { events } = user
 
-    temp = events.filter((event) => {
-    	return (event.id.toString() !== id)
-    })
-    user.events = temp
-    user.save()
-    return user.events
+      temp = events.filter((event) => {
+          return (event.id.toString() !== id)
+      })
+
+      user.events = temp
+      user.save()
+  }).then((response) => {
+    callback()
   })
 }
 module.exports.getUserByEmail = (email, callback) => {

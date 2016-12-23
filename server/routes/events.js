@@ -16,12 +16,8 @@ router.get('/events', (req,res) => {
 router.post('/events', (req,res) => {
   const { date, title, description, city } = req.body
   if (!isDate(date)) {
-    const formData = {
-      date,
-      title,
-      description,
-      city
-    }
+    const formData = {date, title, description, city}
+
     return res.render('events.pug', {
       error: 'Invalid date',
       events: req.user.events,
@@ -31,13 +27,9 @@ router.post('/events', (req,res) => {
   }
   if(req.user.email) {
     const newEvent = {date,title,description,city}
-    const events = req.user.events.concat([newEvent])
 
-    User.addEvent(req.user.email, newEvent)
-
-    return res.render('events.pug',  {
-      events,
-      signedIn: req.user ? true : false
+    User.addEvent(req.user.email, newEvent, () => {
+      return res.redirect('/events')
     })
   } else{
     return res.send('failed')
@@ -46,25 +38,12 @@ router.post('/events', (req,res) => {
 router.delete('/events', (req,res) => {
   const { id, time } = req.body
   const { email } = req.user
-  // console.log('iddd', id);
-  // console.log('event id', req.user.events[req.user.events.length-1].id);
-  // console.log('old eventss', req.user.events);
 
   if (email) {
-    // const events = req.user.events.filter((event) => {
-    //   return (event.id != id)
-    // })
-    // console.log('new eventsss', events);
+    req.method = 'GET'
 
-    User.deleteEvent(email, id, time).then((response) => {
-      console.log('RESPONSEE', response)
-      const events = response.events
-      console.log('response events', events);
-      return res.render('events.pug',  {
-        events,
-        error:'reloaded',
-        signedIn: req.user ? true : false
-      })
+    User.deleteEvent(email, id, time, () => {
+        return res.send({redirect:'/dashboard'})
     })
 
   } else{

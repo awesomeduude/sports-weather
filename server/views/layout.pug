@@ -11,11 +11,11 @@ html
 
       a(href='/dashboard') Dashboard
       a(href='/events') Events
-      if signedIn
-        a(href='/signout') Sign Out
-      else
+      if !signedIn
         a(href='/login') Login
         a(href='/signup') Signup
+      else
+        a(href='/signout') Sign Out
 
     main.content
       block content
