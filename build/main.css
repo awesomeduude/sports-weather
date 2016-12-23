@@ -440,9 +440,9 @@ label[for='nav-trigger'] {
 .nav-trigger {
   display: none; }
   .nav-trigger:checked ~ label[for='nav-trigger'] {
-    left: 10em; }
+    transform: translateX(10em); }
   .nav-trigger:checked ~ .content {
-    left: 10em; }
+    transform: translateX(10em); }
 .login {
   text-align: center; }
   .login h1 {
