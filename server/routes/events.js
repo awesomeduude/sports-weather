@@ -16,10 +16,17 @@ router.get('/events', (req,res) => {
 router.post('/events', (req,res) => {
   const { date, title, description, city } = req.body
   if (!isDate(date)) {
+    const formData = {
+      date,
+      title,
+      description,
+      city
+    }
     return res.render('events.pug', {
       error: 'Invalid date',
       events: req.user.events,
-      signedIn: req.user ? true : false
+      signedIn: req.user ? true : false,
+      formData
     })
   }
   if(req.user.email) {

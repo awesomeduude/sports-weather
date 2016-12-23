@@ -25,17 +25,34 @@ block content
   if error
     .errors
       p= error
-  form(method='post', class='form', action='/events')
-    fieldset
-      label(for='title') Event Title
-      input(type='text' id='title' name='title' placeholder='Enter Event Title' value=name)
-    fieldset
-      label(for='date') Date
-      input(type='text' id='date' name='date' placeholder='mm-dd-yy')
-    fieldset
-      label(for='description') Description
-      input(type='text' id='description' name='description' placeholder='Enter a Description')
-    fieldset
-      label(for='city') City
-      input(type='text' id='city' name='city' placeholder='Enter a City')
-    button(type='submit') Add
+
+  if formData
+    form(method='post', class='form visible', action='/events')
+      fieldset
+        label(for='title') Event Title
+        input(type='text' id='title' name='title' placeholder='Enter Event Title' value=formData.title)
+      fieldset
+        label(for='date') Date
+        input(type='text' id='date' name='date' placeholder='mm-dd-yy' value=formData.date)
+      fieldset
+        label(for='description') Description
+        input(type='text' id='description' name='description' placeholder='Enter a Description' value=formData.description)
+      fieldset
+        label(for='city') City
+        input(type='text' id='city' name='city' placeholder='Enter a City' value=formData.city)
+      button(type='submit') Add
+  else
+    form(method='post', class='form', action='/events')
+      fieldset
+        label(for='title') Event Title
+        input(type='text' id='title' name='title' placeholder='Enter Event Title' value=name)
+      fieldset
+        label(for='date') Date
+        input(type='text' id='date' name='date' placeholder='mm-dd-yy')
+      fieldset
+        label(for='description') Description
+        input(type='text' id='description' name='description' placeholder='Enter a Description')
+      fieldset
+        label(for='city') City
+        input(type='text' id='city' name='city' placeholder='Enter a City')
+      button(type='submit') Add

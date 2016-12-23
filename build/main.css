@@ -519,6 +519,8 @@ label[for='nav-trigger'] {
       display: none; }
   .event-table ~ form {
     display: none; }
+    .event-table ~ form.visible {
+      display: block; }
   .event-table .fa {
     cursor: pointer;
     font-size: 1.2em; }
