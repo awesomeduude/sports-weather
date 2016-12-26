@@ -2,9 +2,7 @@
 
 .event-table
   margin: 0 auto
-  th,td
-    mar
-  th
+  .table-section
     font-weight: bold
     padding: .5em
     border-bottom: 2px solid #0099cc
@@ -13,7 +11,7 @@
     &:first-child
       display: none
 
-  td
+  .event-data
     padding: 1em
     border-bottom: 1px solid #99BFCC
 
@@ -45,3 +43,25 @@
   &:hover
     background-color: #fff
     color: #0099cc
+
+$blue: #0099cc
+
+.btn
+  outline: none
+  border: none
+  cursor: pointer
+
+  color: #eee
+  +transition()
+
+  width: 8.5em
+  padding: .75em
+
+  border-radius: 2px
+
+  &.btn-blue
+    background-color: $blue
+    border: 2px solid $blue
+    &:hover
+      background-color: #fff
+      color: $blue

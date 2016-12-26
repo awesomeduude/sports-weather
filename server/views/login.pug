@@ -1,15 +1,15 @@
 extends layout.pug
 block content
   .login
-    h1 Login
+    h1.login-title Login
     if error
       .errors
-        p= error
+        p.error-text= error
     form(class='form',method='post', action='/login')
-      fieldset
-        label(for='email') Email
-        input(type='text' id='email' name='email' placeholder='Enter Email' value=email)
-      fieldset
-        label(for='password') Password
-        input(type='password' id='password' name='password' placeholder='Enter Password')
-      button(type='submit') Login
+      fieldset.form-fieldset
+        label(class='form-label' for='email') Email
+        input(class='form-input' type='text' id='email' name='email' placeholder='Enter Email' value=email)
+      fieldset.form-fieldset
+        label(class='form-label' for='password') Password
+        input(class='form-input' type='password' id='password' name='password' placeholder='Enter Password')
+      button(class='btn btn-blue' type='submit') Login

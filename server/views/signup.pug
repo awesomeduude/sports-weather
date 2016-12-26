@@ -6,18 +6,18 @@ block content
     if errors
       .errors
         each err in errors
-          p= err.msg
+          p.error-text= err.msg
     form(class='form',method='post', action='/signup')
-      fieldset
-        label(for='name') Name
-        input(type='text' id='name' name='name' placeholder='Enter Name' value=name)
-      fieldset
-        label(for='email') Email
-        input(type='text' id='email' name='email' placeholder='Enter Email' value=email)
-      fieldset
-        label(for='password') Password
-        input(type='password' id='password' name='password' placeholder='Enter Password')
-      fieldset
-        label(for='cpassword') Confirm Password
-        input(type='password' id='cpassword' name='cpassword' placeholder='Confirm Password')
-      button(type='submit') Signup
+      fieldset.form-fieldset
+        label(class='form-label' for='name') Name
+        input(class='form-input' type='text' id='name' name='name' placeholder='Enter Name' value=name)
+      fieldset.form-fieldset
+        label(class='form-label' for='email') Email
+        input(class='form-input' type='text' id='email' name='email' placeholder='Enter Email' value=email)
+      fieldset.form-fieldset
+        label(class='form-label' for='password') Password
+        input(class='form-input' type='password' id='password' name='password' placeholder='Enter Password')
+      fieldset.form-fieldset
+        label(class='form-label' for='cpassword') Confirm Password
+        input(class='form-input' type='password' id='cpassword' name='cpassword' placeholder='Confirm Password')
+      button(class='btn btn-blue' type='submit') Signup

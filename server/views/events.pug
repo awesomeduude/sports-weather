@@ -5,54 +5,54 @@ block content
   table(class='event-table' cellspacing="0")
     thead
       tr
-        th Ids
-        th Events
-        th Time
-        th City
-        th Description
+        th.table-section Ids
+        th.table-section Event
+        th.table-section Time
+        th.table-section City
+        th.table-section Description
     tbody
       each event in events
         tr
-          td= event.id
-          td= event.title
-          td= event.date
-          td= event.city
-          td= event.description
-          td
+          td.event-data= event.id
+          td.event-data= event.title
+          td.event-data= event.date
+          td.event-data= event.city
+          td.event-data= event.description
+          td.event-data
             i.fa.fa-trash-o
 
   button.add-event#event-btn Add Event
   if error
     .errors
-      p= error
+      p.error-text= error
 
   if formData
     form(method='post', class='form visible', action='/events')
-      fieldset
-        label(for='title') Event Title
-        input(type='text' id='title' name='title' placeholder='Enter Event Title' value=formData.title)
-      fieldset
-        label(for='date') Date
-        input(type='text' id='date' name='date' placeholder='mm-dd-yy' value=formData.date)
-      fieldset
-        label(for='description') Description
-        input(type='text' id='description' name='description' placeholder='Enter a Description' value=formData.description)
-      fieldset
-        label(for='city') City
-        input(type='text' id='city' name='city' placeholder='Enter a City' value=formData.city)
-      button(type='submit') Add
+      fieldset.form-fieldset
+        label(class='form-label' for='title') Event Title
+        input(class='form-input' type='text' id='title' name='title' placeholder='Enter Event Title' value=formData.title)
+      fieldset.form-fieldset
+        label(class='form-label' for='date') Date
+        input(class='form-input' type='text' id='date' name='date' placeholder='mm-dd-yy' value=formData.date)
+      fieldset.form-fieldset
+        label(class='form-label' for='description') Description
+        input(class='form-input' type='text' id='description' name='description' placeholder='Enter a Description' value=formData.description)
+      fieldset.form-fieldset
+        label(class='form-label' for='city') City
+        input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City' value=formData.city)
+      button(class='btn btn-blue' type='submit') Add
   else
     form(method='post', class='form', action='/events')
-      fieldset
-        label(for='title') Event Title
-        input(type='text' id='title' name='title' placeholder='Enter Event Title' value=name)
-      fieldset
-        label(for='date') Date
-        input(type='text' id='date' name='date' placeholder='mm-dd-yy')
-      fieldset
-        label(for='description') Description
-        input(type='text' id='description' name='description' placeholder='Enter a Description')
-      fieldset
-        label(for='city') City
-        input(type='text' id='city' name='city' placeholder='Enter a City')
-      button(type='submit') Add
+      fieldset.form-fieldset
+        label(class='form-label' for='title') Event Title
+        input(class='form-input' type='text' id='title' name='title' placeholder='Enter Event Title' value=name)
+      fieldset.form-fieldset
+        label(class='form-label' for='date') Date
+        input(class='form-input' type='text' id='date' name='date' placeholder='mm-dd-yy')
+      fieldset.form-fieldset
+        label(class='form-label' for='description') Description
+        input(class='form-input' type='text' id='description' name='description' placeholder='Enter a Description')
+      fieldset.form-fieldset
+        label(class='form-label' for='city') City
+        input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City')
+      button(class='btn btn-blue' type='submit') Add

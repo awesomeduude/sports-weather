@@ -6,16 +6,16 @@ html
 
   body
     input(type='checkBox' class='nav-trigger' id='nav-trigger')
-    label(for='nav-trigger')
+    label(for='nav-trigger' class='hamburger')
     nav.navigation
 
-      a(href='/dashboard') Dashboard
-      a(href='/events') Events
+      a(class='nav-link' href='/dashboard') Dashboard
+      a(class='nav-link' href='/events') Events
       if !signedIn
-        a(href='/login') Login
-        a(href='/signup') Signup
+        a(class='nav-link' href='/login') Login
+        a(class='nav-link' href='/signup') Signup
       else
-        a(href='/signout') Sign Out
+        a(class='nav-link' href='/signout') Sign Out
 
     main.content
       block content

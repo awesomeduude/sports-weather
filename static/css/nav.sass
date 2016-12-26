@@ -1,8 +1,9 @@
 @import '../../node_modules/bourbon/app/assets/stylesheets/bourbon'
 
 $nav-width: 10em
+$blue: #0099cc
 
-label[for='nav-trigger']
+.hamburger
 
   +position(relative null null null 0)
   +transition()
@@ -40,7 +41,7 @@ label[for='nav-trigger']
 
   padding: 2em 1em
 
-  a
+  .nav-link
     text-decoration: none
     color: #ddd
 
@@ -48,13 +49,13 @@ label[for='nav-trigger']
     margin: .25em
 
     &:hover
-      color: darken(chartreuse, 10%)
+      color: lighten($blue, 5%)
 
 
 .nav-trigger
   display: none
 
-  &:checked ~ label[for='nav-trigger']
+  &:checked ~ .hamburger
     transform: translateX($nav-width)
 
   &:checked ~ .content
