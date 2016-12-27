@@ -37,9 +37,6 @@ router.post('/signup', (req,res) => {
           return res.render('signup.pug', {errors});
         }
         return res.redirect('/login')
-      //  passport.authenticate('local')(req, res, () => {
-      //    return res.redirect('/dashboard');
-      //  });
    });
   }
 })

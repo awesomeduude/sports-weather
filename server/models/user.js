@@ -3,6 +3,8 @@ const { Schema } = mongoose
 const passportLocalMongoose = require('passport-local-mongoose')
 const bcrypt = require('bcryptjs')
 
+const Event = require('./event')
+
 const userSchema = Schema({
 
   name: {
@@ -32,12 +34,15 @@ const User = module.exports = mongoose.model('User', userSchema)
 module.exports.addEvent = (email, eventData, callback) => {
   const query = {email}
   eventData.id = Math.random()
+
   User.findOne(query, (err,user) => {
     user.events.push(eventData)
     user.save()
   }).then((response) => {
     callback()
   })
+  eventData.email = email
+  Event.createEvent(eventData)
 
 }
 module.exports.deleteEvent = (email, id, time, callback) => {
