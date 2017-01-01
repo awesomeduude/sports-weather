@@ -14,11 +14,16 @@ router.get('/signup', (req,res) => {
   res.render('signup.pug')
 })
 router.post('/signup', (req,res) => {
-  const { name, email, password, cpassword } = req.body
+  const { name, email, phone, password, cpassword } = req.body
 
   req.checkBody('name', 'Name is Required').notEmpty()
+
   req.checkBody('email', 'Email is Required').notEmpty()
   req.checkBody('email', 'Email is not valid').isEmail()
+
+  req.checkBody('phone', 'Phone number is required').notEmpty()
+  req.checkBody('phone', 'Phone number is in incorrect format').isValidPhoneNumber()
+
   req.checkBody('password', 'Password is Required').notEmpty()
   req.checkBody('cpassword', 'Passwords do not match').equals(password)
 
@@ -26,9 +31,9 @@ router.post('/signup', (req,res) => {
 
   if (errors) {
 
-    return res.render('signup.pug',{errors,name,email})
+    return res.render('signup.pug',{errors,name,email,phone})
   } else {
-      const newUser = new User({name, email, password})
+      const newUser = new User({name, email, phone, password})
 
       User.register(newUser, password, (err, user) => {
 

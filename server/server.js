@@ -23,14 +23,20 @@ app.set('views', path.join(__dirname,'/views'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
-app.use(expressValidator())
-
+app.use(expressValidator({
+  customValidators: {
+    isValidPhoneNumber: function(number) {
+      const regex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+      return regex.test(number)
+    }
+  }
+}))
 var sess = {
   secret: 'keyboard cat',
   cookie: {}
 }
-
-if (app.get('env') === 'production') {
+//if app is deployed
+if (process.env.MONGODV_URI) {
   app.set('trust proxy', 1) // trust first proxy
   sess.cookie.secure = true // serve secure cookies
 }

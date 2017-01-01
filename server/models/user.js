@@ -7,13 +7,12 @@ const Event = require('./event')
 
 const userSchema = Schema({
 
-  name: {
-    type: String
-  },
+  name: String,
   email: {
     type: String,
     index: true
   },
+  phone: String,
   events: [
     {
       id: Number,
