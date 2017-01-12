@@ -1,8 +1,14 @@
 const express = require('express')
+const axios = require('axios')
+
 const router = express.Router()
 const User = require('../models/user')
 
+
+const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
+
 router.get('/events', (req,res) => {
+
   if (req.user) {
     res.render('events.pug', {
       events: req.user.events,
@@ -14,26 +20,48 @@ router.get('/events', (req,res) => {
 })
 
 router.post('/events', (req,res) => {
-  const { date, title, description, city } = req.body
-  if (!isDate(date)) {
-    const formData = {date, title, description, city}
 
+  const { date, title, description, city } = req.body
+  const { events, email } = req.user
+
+  const formData = {date,title,description,city}
+
+  //check if valid date, and valid city
+  if (!isDate(date)) {
     return res.render('events.pug', {
       error: 'Invalid date',
-      events: req.user.events,
       signedIn: req.user ? true : false,
+      events,
       formData
     })
   }
-  if(req.user.email) {
-    const newEvent = {date,title,description,city}
+  //correct format for api call
+  const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/CA/${city.replace(' ', '_')}.json`
 
-    User.addEvent(req.user.email, newEvent, () => {
-      return res.redirect('/events')
-    })
-  } else{
-    return res.send('failed')
-  }
+  axios.get(url).then((response) => {
+    //not a valid city
+    if (!response.data.forecast) {
+      const error = 'The city you entered was not found, please enter a new city'
+      return res.render('events.pug', {
+        signedIn: req.user ? true : false,
+        events,
+        error,
+        formData
+      })
+    } else{ //user entered valid city
+      if(email) {
+        const newEvent = {date,title,description,city}
+
+        User.addEvent(email, newEvent, () => {
+          return res.redirect('/events')
+        })
+      } else{
+        console.log('not logged in');
+        return res.redirect('/login')
+      }
+    }
+  })
+
 })
 router.delete('/events', (req,res) => {
   const { id, time } = req.body
@@ -50,6 +78,7 @@ router.delete('/events', (req,res) => {
     return res.send('failed')
   }
 })
+
 function isDate(date) {
   return !isNaN(Date.parse(date))
 }
