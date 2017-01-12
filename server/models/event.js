@@ -17,3 +17,9 @@ module.exports.createEvent = (eventData) => {
   const newEvent = new Event(eventData)
   newEvent.save()
 }
+module.exports.getAllEvents = (date, callback) => {
+  const query = {date}
+  Event.find(query).then((response) => {
+    callback(response)
+  })
+}
