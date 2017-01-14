@@ -9,7 +9,8 @@ const axios = require('axios')
 const eventBtn = document.getElementById('event-btn');
 if (eventBtn) {
   eventBtn.onclick = () => {
-    document.querySelector('.event-table ~ form').style.display = 'block'
+    document.querySelector('.event-table ~ .add-event').style.display = 'none'
+    document.querySelector('.event-table ~ .form').style.display = 'block'
   }
 }
 

@@ -1,12 +1,14 @@
 @import '../../node_modules/bourbon/app/assets/stylesheets/bourbon'
 
+$blue: #0099cc
+
 .event-table
-  margin: 0 auto
+  margin: 0 auto 1em auto
   .table-section
     font-weight: bold
     padding: .5em
-    border-bottom: 2px solid #0099cc
-    color: #0099cc
+    border-bottom: 2px solid $blue
+    color: $blue
 
     &:first-child
       display: none
@@ -27,41 +29,5 @@
     font-size: 1.2em
 
 .add-event
-
   +position(relative, null null null 50%)
   transform: translateX(-50%)
-  padding: .75em 2em
-  background-color: #0099cc
-  outline:none
-  border: 2px solid #0099cc
-  color: #eee
-  margin: 1rem
-
-  +transition()
-  border-radius: 2px
-
-  &:hover
-    background-color: #fff
-    color: #0099cc
-
-$blue: #0099cc
-
-.btn
-  outline: none
-  border: none
-  cursor: pointer
-
-  color: #eee
-  +transition()
-
-  width: 8.5em
-  padding: .75em
-
-  border-radius: 2px
-
-  &.btn-blue
-    background-color: $blue
-    border: 2px solid $blue
-    &:hover
-      background-color: #fff
-      color: $blue

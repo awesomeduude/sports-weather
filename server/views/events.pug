@@ -21,13 +21,13 @@ block content
           td.event-data
             i.fa.fa-trash-o
 
-  button.add-event#event-btn Add Event
+
   if error
     .errors
       p.error-text= error
 
   if formData
-    form(method='post', class='form visible', action='/events')
+    form(method='post', class='form event-form visible', action='/events')
       fieldset.form-fieldset
         label(class='form-label' for='title') Event Title
         input(class='form-input' type='text' id='title' name='title' placeholder='Enter Event Title' value=formData.title)
@@ -42,7 +42,8 @@ block content
         input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City' value=formData.city)
       button(class='btn btn-blue' type='submit') Add
   else
-    form(method='post', class='form', action='/events')
+    button.btn.btn-blue.add-event#event-btn Add Event
+    form(method='post', class='form event-form', action='/events')
       fieldset.form-fieldset
         label(class='form-label' for='title') Event Title
         input(class='form-input' type='text' id='title' name='title' placeholder='Enter Event Title' value=name)

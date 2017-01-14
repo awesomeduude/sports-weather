@@ -25,3 +25,25 @@ button:active,
 button:focus
   border: none
   outline: none
+
+$blue: #0099cc
+
+.btn
+  outline: none
+  border: none
+  cursor: pointer
+
+  color: #eee
+  +transition()
+
+  width: 8.5em
+  padding: .75em
+
+  border-radius: 2px
+
+  &.btn-blue
+    background-color: $blue
+    border: 2px solid $blue
+    &:hover
+      background-color: #fff
+      color: $blue
