@@ -1,7 +1,28 @@
 #!/usr/bin/env node
-function sayHello() {
-  console.log('&&&&&&&&&&scheduler works&&&&&&&&&&');
+var axios = require('axios')
+
+function getFormattedDate(date) {
+  var year = date.getFullYear();
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  return month + '/' + day + '/' + year;
 }
 
-sayHello();
+function sendTexts() {
+  var date = new Date()
+  date = getFormattedDate(date)
+  axios.post('/user', {
+    date
+  })
+  .then((response) => {
+    console.log('sendTexts response', response);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+  console.log('texts sent, date: ', date)
+}
+sendTexts();
 process.exit();

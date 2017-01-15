@@ -56,6 +56,7 @@ app.use('/', signout)
 app.use('/', weather)
 
 
+//const database = 'mongodb://127.0.0.1/myDb'
 const database = process.env.MONGODB_URI || require('./keys').database
 mongoose.connect(database)
 
