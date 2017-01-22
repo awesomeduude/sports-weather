@@ -38,7 +38,7 @@ var sess = {
   cookie: {}
 }
 //if app is deployed
-if (process.env.MONGODV_URI) {
+if (process.env.MONGODB_URI) {
   app.set('trust proxy', 1) // trust first proxy
   sess.cookie.secure = true // serve secure cookies
 }

@@ -44,14 +44,14 @@ module.exports.addEvent = (email, eventData, callback) => {
   Event.createEvent(eventData)
 
 }
-module.exports.deleteEvent = (email, id, time, callback) => {
+module.exports.deleteEvent = (email, id, callback) => {
   const query = {email}
 
   User.findOne(query, (err,user) => {
       let { events } = user
 
       temp = events.filter((event) => {
-          return (event.id.toString() !== id)
+          return (event.id.toString() !== id.toString())
       })
 
       user.events = temp

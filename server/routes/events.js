@@ -3,6 +3,7 @@ const axios = require('axios')
 
 const router = express.Router()
 const User = require('../models/user')
+const Event = require('../models/event')
 
 
 const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
@@ -70,9 +71,10 @@ router.delete('/events', (req,res) => {
   if (email) {
     req.method = 'GET'
 
-    User.deleteEvent(email, id, time, () => {
+    User.deleteEvent(email, id, () => {
         return res.send({redirect:'/dashboard'})
     })
+    Event.deleteEvent(email, time, id)
 
   } else{
     return res.send('failed')

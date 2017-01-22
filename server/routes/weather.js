@@ -51,7 +51,15 @@ router.post('/weather', (req,res) => {
 
           const message = `The weather will be ${weather} at your event ${title} on ${date}`
           console.log('phoNNE, message', phone, message);
-          sendText(phone, message)
+          sendText(phone, message, () => {
+            console.log('emaiil, id', email, id);
+            User.deleteEvent(email, id,() => {
+              //empty
+            })
+
+            Event.deleteEvent(email, date, id)
+
+          })
         })
 
       })
@@ -60,7 +68,7 @@ router.post('/weather', (req,res) => {
   })
   return res.send({'sucesss': true})
 })
-function sendText(phoneNumber, message) {
+function sendText(phoneNumber, message, callback) {
 
   twilio.sendMessage({
     to: phoneNumber,
@@ -69,9 +77,12 @@ function sendText(phoneNumber, message) {
   }, (err, response) => {
     if (err) {
       console.log(err);
+    } else {
+      callback()
     }
     console.log('twilio response', response);
   })
+
   console.log('messsage', message);
 
 }
