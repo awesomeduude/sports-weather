@@ -2,6 +2,9 @@
 @import '../../node_modules/bourbon/app/assets/stylesheets/bourbon'
 
 $fonts: 'Roboto', Helvetica, sans-serif
+$form-background: #ddd
+$form-width: 20em
+$blue: #0099cc
 *
   box-sizing: border-box
 body
@@ -26,8 +29,6 @@ button:focus
   border: none
   outline: none
 
-$blue: #0099cc
-
 .btn
   outline: none
   border: none
@@ -47,3 +48,58 @@ $blue: #0099cc
     &:hover
       background-color: #fff
       color: $blue
+.form
+  margin: 0 auto
+  border: 1px solid $form-background
+  border-radius: 5px
+  padding: 1.3em
+  background-color: rgba(238,238,238,.5)
+  box-shadow: 2px 2px 3px 1px rgba(0,0,0,.2)
+  width: $form-width
+  text-align: center
+  font-size: 1rem
+
+  .form-input
+    width: 100%
+    font-size: .9rem
+    padding: .5em .7em
+    line-height: 1
+    border-radius: 4px
+    border: 2px solid $form-background
+    display:inline-block
+    &:focus
+      outline: none
+      border: 2px solid $blue
+    &[name='state']
+      text-align: center
+  .form-label
+    text-align: left
+    display: block
+    margin-bottom: .3em
+  .form-fieldset
+    margin: 0 0 1.2rem 0
+    padding: 0
+    border: none
+    width: 100%
+  .inline-row
+    display: flex
+    justify-content: space-around
+    .form-fieldset:last-child
+      width: 4em
+      margin-left: 1em
+.errors
+  border-radius: 5px
+  +position(relative, null null null 50%)
+  box-sizing: border-box
+  transform: translateX(-50%)
+  background-color: rgba(220, 20, 60, .5)
+  padding: 1em
+  width: $form-width
+  margin-bottom: 1em
+
+  .error-text
+    color: #990000
+    text-align: left
+    display: inline-block
+    width: $form-width
+    margin: .5em

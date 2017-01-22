@@ -9,6 +9,7 @@ const eventSchema = Schema({
   title: String,
   description: String,
   city: String,
+  state: String,
   email: String
 })
 

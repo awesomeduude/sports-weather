@@ -37,9 +37,13 @@ block content
       fieldset.form-fieldset
         label(class='form-label' for='description') Description
         input(class='form-input' type='text' id='description' name='description' placeholder='Enter a Description' value=formData.description)
-      fieldset.form-fieldset
-        label(class='form-label' for='city') City
-        input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City' value=formData.city)
+      div.inline-row
+        fieldset.form-fieldset
+          label(class='form-label' for='city') City
+          input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City' value=formData.city)
+        fieldset.form-fieldset
+          label(class='form-label' for='state') State
+          input(class='form-input' type='text' id='state' name='state' placeholder='CA' value=formData.state)
       button(class='btn btn-blue' type='submit') Add
   else
     button.btn.btn-blue.add-event#event-btn Add Event
@@ -53,7 +57,11 @@ block content
       fieldset.form-fieldset
         label(class='form-label' for='description') Description
         input(class='form-input' type='text' id='description' name='description' placeholder='Enter a Description')
-      fieldset.form-fieldset
-        label(class='form-label' for='city') City
-        input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City')
+      div.inline-row
+        fieldset.form-fieldset
+          label(class='form-label' for='city') City
+          input(class='form-input' type='text' id='city' name='city' placeholder='Enter a City')
+        fieldset.form-fieldset
+          label(class='form-label' for='state') State
+          input(class='form-input' type='text' id='state' name='state' placeholder='CA')
       button(class='btn btn-blue' type='submit') Add

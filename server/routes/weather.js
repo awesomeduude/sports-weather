@@ -6,7 +6,7 @@ let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN} = process.env
 TWILIO_ACCOUNT_SID = TWILIO_ACCOUNT_SID.replace(/['"]+/g, '')
 TWILIO_AUTH_TOKEN = TWILIO_AUTH_TOKEN.replace(/['"]+/g, '')
 TWILIO_NUMBER = '+16502002228'
-console.log('twill',TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+
 const twilio = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 const router = express.Router()
@@ -32,17 +32,18 @@ router.put('/weather', (req,res) => {
 
 })
 router.post('/weather', (req,res) => {
-  console.log('posteddd');
+
   const { date } = req.body
   console.log('received date: ', date);
+
   Event.getAllEvents(date, (events) => {
-    console.log('evennntsss', events);
+
     events.forEach((event) => {
-      const { city, email, title, date } = event
+      const { city, state, email, title, date, id } = event
       User.findUserByEmail(email).then((user) => {
         const { phone } = user
 
-        const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/CA/${city.replace(' ', '_')}.json`
+        const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/${state}/${city.replace(' ', '_')}.json`
 
         axios.get(url).then((response) => {
 

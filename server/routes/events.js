@@ -22,10 +22,10 @@ router.get('/events', (req,res) => {
 
 router.post('/events', (req,res) => {
 
-  const { date, title, description, city } = req.body
+  const { date, title, description, city, state } = req.body
   const { events, email } = req.user
 
-  const formData = {date,title,description,city}
+  const formData = {date,title,description,city, state}
 
   //check if valid date, and valid city
   if (!isDate(date)) {
@@ -37,12 +37,13 @@ router.post('/events', (req,res) => {
     })
   }
   //correct format for api call
-  const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/CA/${city.replace(' ', '_')}.json`
+  const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/${state}/${city.replace(' ', '_')}.json`
 
   axios.get(url).then((response) => {
     //not a valid city
     if (!response.data.forecast) {
-      const error = 'The city you entered was not found, please enter a new city'
+      const error = 'The city you entered was not found in the state'
+
       return res.render('events.pug', {
         signedIn: req.user ? true : false,
         events,
@@ -51,7 +52,7 @@ router.post('/events', (req,res) => {
       })
     } else{ //user entered valid city
       if(email) {
-        const newEvent = {date,title,description,city}
+        const newEvent = {date,title,description,city, state}
 
         User.addEvent(email, newEvent, () => {
           return res.redirect('/events')
