@@ -542,8 +542,13 @@ button:focus {
   .event-table .fa {
     cursor: pointer;
     font-size: 1.2em; }
+  .event-table .fa-pencil-square-o {
+    margin-right: .5em; }
 
 .add-event {
   position: relative;
   left: 50%;
   transform: translateX(-50%); }
+
+.event-form:first-child {
+  display: none; }

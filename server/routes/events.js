@@ -11,10 +11,12 @@ const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
 router.get('/events', (req,res) => {
 
   if (req.user) {
-    res.render('events.pug', {
-      events: req.user.events,
-      signedIn: req.user ? true : false
-    })
+    const { events } = req.user
+
+      res.render('events.pug', {
+        signedIn: req.user ? true : false,
+        events
+      })
   } else {
     res.redirect('/login')
   }
@@ -81,7 +83,57 @@ router.delete('/events', (req,res) => {
     return res.send('failed')
   }
 })
+router.put('/events', (req,res) => {
+  console.log('putttt');
+  const eventData = req.body.data.eventData
+  const { date, title, description, city, state, id } = eventData
+  const { events, email } = req.user
 
+  const formData = {date,title,description,city, state}
+
+  //check if valid date, and valid city
+  if (!isDate(date)) {
+    return res.render('events.pug', {
+      error: 'Invalid date',
+      signedIn: req.user ? true : false,
+      events,
+      edit: true,
+      formData
+    })
+  }
+  //correct format for api call
+  const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/${state}/${city.replace(' ', '_')}.json`
+
+  axios.get(url).then((response) => {
+    //not a valid city
+    console.log('axios');
+    if (!response.data.forecast) {
+      const error = 'The city you entered was not found in the state'
+
+      return res.render('events.pug', {
+        signedIn: req.user ? true : false,
+        events,
+        error,
+        edit: true,
+        formData
+      })
+    } else{ //user entered valid city
+      if(email) {
+        //const newEvent = {id, date,title,description,city, state}
+        console.log('newevent$$&&', eventData);
+        //edit model
+        req.method = 'GET'
+        User.editEvent(email, eventData, () => {
+
+          return res.send({redirect:'/dashboard'})
+        })
+      } else{
+        console.log('not logged in');
+        return res.redirect('/login')
+      }
+    }
+  })
+})
 function isDate(date) {
   return !isNaN(Date.parse(date))
 }

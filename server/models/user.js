@@ -19,7 +19,8 @@ const userSchema = Schema({
       date: String,
       title: String,
       description: String,
-      city: String
+      city: String,
+      state: String
     }
   ]
 })
@@ -50,12 +51,34 @@ module.exports.deleteEvent = (email, id, callback) => {
   User.findOne(query, (err,user) => {
       let { events } = user
 
-      temp = events.filter((event) => {
+      const temp = events.filter((event) => {
           return (event.id.toString() !== id.toString())
       })
 
       user.events = temp
       user.save()
+  }).then((response) => {
+    callback()
+  })
+}
+module.exports.editEvent = (email, newEvent, callback) => {
+  console.log('newevent%%', newEvent);
+  const query = {email}
+  User.findOne(query, (err, user) => {
+    let { events } = user
+    console.log('events%%', events);
+
+    const temp = events.map((event) => {
+      if (event.id == newEvent.id) {
+        console.log('evnet?*7&', event)
+        return newEvent
+      } else{
+        return event
+      }
+    })
+    user.events = temp
+    user.save()
+    //edit EVENT SCHEMA too
   }).then((response) => {
     callback()
   })

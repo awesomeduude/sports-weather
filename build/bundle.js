@@ -81,12 +81,99 @@
 	          }
 	        }).then(function (res) {
 	          window.location.href = '/events';
+	          console.log('RESP00N$$$e');
 	        }).catch(function (err) {
 	          console.log(err);
 	        });
 	      }
 	    };
 	  });
+	}
+
+	var editLinks = document.querySelectorAll('.fa-pencil-square-o');
+
+	if (editLinks.length) {
+	  //For Each edit icon
+	  Array.from(editLinks).forEach(function (pencilIcon) {
+	    pencilIcon.onclick = function (e) {
+	      document.querySelector('.event-table ~ .add-event').style.display = 'none';
+	      var form = document.querySelector('.event-table ~ .form');
+	      form.style.display = 'block';
+
+	      //the row of evnts
+	      var event = pencilIcon.parentElement.parentElement;
+	      var eventData = getEventData(event);
+	      console.log('b4 fillform', eventData);
+	      fillForm(eventData);
+
+	      var submitbtn = document.querySelector('button[type="submit"]');
+
+	      submitbtn.innerText = 'Edit';
+	      submitbtn.setAttribute('data-method', 'put');
+	    };
+	  });
+	}
+	document.querySelector('.event-form').onsubmit = function (e) {
+	  if (document.querySelector('.event-form button[type="submit"]').getAttribute('data-method') === 'put') {
+	    e.preventDefault();
+	    console.log('putteddd');
+	    console.log('eee333', e);
+	    var eventData = getEventDataFromForm(e);
+
+	    axios.put('/events', {
+	      data: {
+	        eventData: eventData
+	      }
+	    }).then(function (res) {
+	      window.location.href = '/events';
+	      console.log('respon$$e');
+	    });
+	  }
+	};
+	function getEventDataFromForm(e) {
+	  var eventData = {};
+	  var type = '';
+	  for (var i = 0; i <= 10; i += 2) {
+	    type = e.target[i].name;
+	    eventData[type] = e.target[i].value;
+	  }
+	  return eventData;
+	  console.log('from form', eventData);
+	}
+
+	function getEventData(event) {
+	  var eventData = {};
+	  var type = '';
+	  //the rows with id, title, time etc.
+	  var headers = document.querySelector('.event-table').children[0].children[0].children;
+
+	  Array.from(event.children).forEach(function (data, i) {
+
+	    type = headers[i].innerText.toLowerCase();
+	    if (type !== 'actions') {
+	      if (type === 'event') {
+	        eventData['title'] = data.innerText;
+	      } else {
+	        eventData[type] = data.innerText;
+	      }
+	    }
+	  });
+	  return eventData;
+	}
+	function fillForm(eventData) {
+	  var title = eventData.title,
+	      city = eventData.city,
+	      date = eventData.date,
+	      description = eventData.description,
+	      state = eventData.state,
+	      id = eventData.id;
+
+	  document.getElementById('title').value = title;
+	  document.getElementById('date').value = date;
+	  document.getElementById('description').value = description;
+	  document.getElementById('city').value = city;
+	  document.getElementById('state').value = state;
+	  document.getElementById('id').value = id;
 	}
 
 /***/ },

@@ -5,11 +5,13 @@ block content
   table(class='event-table' cellspacing="0")
     thead
       tr
-        th.table-section Ids
+        th.table-section Id
         th.table-section Event
-        th.table-section Time
+        th.table-section Date
         th.table-section City
+        th.table-section State
         th.table-section Description
+        th.table-section Actions
     tbody
       each event in events
         tr
@@ -17,17 +19,20 @@ block content
           td.event-data= event.title
           td.event-data= event.date
           td.event-data= event.city
+          td.event-data= event.state
           td.event-data= event.description
           td.event-data
+            i.fa.fa-pencil-square-o
             i.fa.fa-trash-o
-
-
   if error
     .errors
       p.error-text= error
 
+  if edit
+    p PLSSSSS W000Rkkk
   if formData
     form(method='post', class='form event-form visible', action='/events')
+      input(type='text' id='id' name='id')
       fieldset.form-fieldset
         label(class='form-label' for='title') Event Title
         input(class='form-input' type='text' id='title' name='title' placeholder='Enter Event Title' value=formData.title)
@@ -44,10 +49,15 @@ block content
         fieldset.form-fieldset
           label(class='form-label' for='state') State
           input(class='form-input' type='text' id='state' name='state' placeholder='CA' value=formData.state)
-      button(class='btn btn-blue' type='submit') Add
+      if edit
+        button(class='btn btn-blue' data-method='put' type='submit') Edit Event
+      else
+        button(class='btn btn-blue' type='submit') Add
+
   else
     button.btn.btn-blue.add-event#event-btn Add Event
     form(method='post', class='form event-form', action='/events')
+      input(type='text' id='id' name='id')
       fieldset.form-fieldset
         label(class='form-label' for='title') Event Title
         input(class='form-input' type='text' id='title' name='title' placeholder='Enter Event Title' value=name)
