@@ -125,8 +125,8 @@
 	        eventData: eventData
 	      }
 	    }).then(function (res) {
-	      window.location.href = '/events';
-	      console.log('respon$$e');
+	      //window.location.href = '/events'
+	      console.log('respon$$e', res);
 	    });
 	  }
 	};

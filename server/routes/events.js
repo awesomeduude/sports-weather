@@ -9,7 +9,11 @@ const Event = require('../models/event')
 const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
 
 router.get('/events', (req,res) => {
-
+  // return res.render('events.pug', {
+  //   signedIn: req.user ? true: false,
+  //   events: req.user.events,
+  //   edit: true
+  // })
   if (req.user) {
     const { events } = req.user
 
@@ -90,10 +94,11 @@ router.put('/events', (req,res) => {
   const { events, email } = req.user
 
   const formData = {date,title,description,city, state}
-
+  console.log('daateee', date);
   //check if valid date, and valid city
   if (!isDate(date)) {
-    return res.render('events.pug', {
+    console.log('D@@@t3333 ERROr');
+    return res.status(200).render('events.pug', {
       error: 'Invalid date',
       signedIn: req.user ? true : false,
       events,
