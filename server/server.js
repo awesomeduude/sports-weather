@@ -12,6 +12,7 @@ const dashboard = require('./routes/dashboard')
 const events = require('./routes/events')
 const signout = require('./routes/signout')
 const weather = require('./routes/weather')
+const api = require('./routes/api')
 
 const User = require('./models/user')
 
@@ -54,6 +55,7 @@ app.use('/', dashboard)
 app.use('/', events)
 app.use('/', signout)
 app.use('/', weather)
+app.use('/api', api)
 
 
 //const database = 'mongodb://127.0.0.1/myDb'

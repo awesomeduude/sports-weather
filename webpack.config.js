@@ -3,7 +3,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
 module.exports = {
-  entry: './static/js/app.js',
+  entry: './client/js/index.js',
   output: {
     path:'./build/',
     filename: 'bundle.js'
@@ -15,16 +15,17 @@ module.exports = {
     loaders: [
       {
         loader: ExtractTextPlugin.extract('style-loader','css-loader!sass-loader'),
-        include: /static/,
+        include: /client/,
         test: /\.sass$/
       },
       {
-        test:/\.js$/,
-        include: /static/,
+        test:/\.jsx?$/,
+        include: /client/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015']
+          presets: ['es2015', 'react'],
+          plugins: ["transform-decorators-legacy", "transform-class-properties"]
         }
       }
     ]
