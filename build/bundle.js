@@ -54,23 +54,23 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _app = __webpack_require__(178);
+	var _App = __webpack_require__(178);
 
-	var _app2 = _interopRequireDefault(_app);
+	var _App2 = _interopRequireDefault(_App);
 
-	var _AppState = __webpack_require__(207);
+	var _AppState = __webpack_require__(208);
 
 	var _AppState2 = _interopRequireDefault(_AppState);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var calvin = new _AppState2.default('Calvin');
-	window.store = calvin;
+	var user = new _AppState2.default();
+	window.store = user;
 
 	var app = document.getElementById('app');
 
 	if (app) {
-	  _reactDom2.default.render(_react2.default.createElement(_app2.default, { store: calvin }), app);
+	  _reactDom2.default.render(_react2.default.createElement(_App2.default, { store: user }), app);
 	}
 
 /***/ },
@@ -21528,6 +21528,10 @@
 
 	var _EventTable2 = _interopRequireDefault(_EventTable);
 
+	var _EventForm = __webpack_require__(207);
+
+	var _EventForm2 = _interopRequireDefault(_EventForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21539,10 +21543,15 @@
 	var App = (0, _mobxReact.observer)(_class = function (_Component) {
 	  _inherits(App, _Component);
 
-	  function App() {
+	  function App(props) {
 	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+	    _this.handleAddEventClick = _this.handleAddEventClick.bind(_this);
+	    _this.handleEditEventClick = _this.handleEditEventClick.bind(_this);
+	    _this.handleDeleteEventClick = _this.handleDeleteEventClick.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(App, [{
@@ -21555,26 +21564,60 @@
 	      });
 	    }
 	  }, {
+	    key: 'handleAddEventClick',
+	    value: function handleAddEventClick() {
+	      this.props.store.setCurrentEventAction('CREATE');
+	    }
+	  }, {
+	    key: 'handleEditEventClick',
+	    value: function handleEditEventClick() {
+	      this.props.store.setCurrentEventAction('EDIT');
+	    }
+	  }, {
+	    key: 'handleDeleteEventClick',
+	    value: function handleDeleteEventClick() {
+	      this.props.store.setCurrentEventAction('DELETE');
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _props$store = this.props.store,
-	          name = _props$store.name,
-	          user = _props$store.user;
+	          user = _props$store.user,
+	          currentEventAction = _props$store.currentEventAction;
 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'h1',
+	        user ? _react2.default.createElement(
+	          'div',
 	          null,
-	          'Hello, ',
-	          name
-	        ),
-	        user ? _react2.default.createElement(_EventTable2.default, { user: user }) : _react2.default.createElement(
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            'Hello, ',
+	            this.props.store.name
+	          ),
+	          _react2.default.createElement(_EventTable2.default, { user: user, handleEditEventClick: this.handleEditEventClick, handleDeleteEventClick: this.handleDeleteEventClick }),
+	          currentEventAction === 'VIEW' ? _react2.default.createElement(
+	            'button',
+	            { onClick: this.handleAddEventClick, className: 'btn btn-blue add-event' },
+	            'Add Event'
+	          ) : null
+	        ) : _react2.default.createElement(
 	          'p',
 	          null,
 	          'Spinner'
-	        )
+	        ),
+	        this.props.store.formError ? _react2.default.createElement(
+	          'div',
+	          { className: 'errors' },
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'error-text' },
+	            this.props.store.formError
+	          )
+	        ) : null,
+	        currentEventAction === 'CREATE' || currentEventAction == 'EDIT' ? _react2.default.createElement(_EventForm2.default, { store: this.props.store, type: currentEventAction }) : null
 	      );
 	    }
 	  }]);
@@ -26990,8 +27033,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var EventTable = (0, _mobxReact.observer)(function (_ref) {
-	  var user = _ref.user;
+	var EventTable = (0, _mobxReact.observer)(function (props) {
 	  return _react2.default.createElement(
 	    'table',
 	    { className: 'event-table', cellSpacing: '0' },
@@ -27041,7 +27083,7 @@
 	    _react2.default.createElement(
 	      'tbody',
 	      null,
-	      user.events.map(function (event) {
+	      props.user.events.map(function (event) {
 	        return _react2.default.createElement(
 	          'tr',
 	          { key: event.id },
@@ -27078,8 +27120,8 @@
 	          _react2.default.createElement(
 	            'td',
 	            { className: 'event-data' },
-	            _react2.default.createElement('i', { className: 'fa fa-pencil-square-o' }),
-	            _react2.default.createElement('i', { className: 'fa fa-trash-o' })
+	            _react2.default.createElement('i', { onClick: props.handleEditEventClick, className: 'fa fa-pencil-square-o' }),
+	            _react2.default.createElement('i', { onClick: props.handleDeleteEventClick, className: 'fa fa-trash-o' })
 	          )
 	        );
 	      })
@@ -27101,7 +27143,159 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _desc, _value, _class, _descriptor, _descriptor2;
+	var _class;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _mobx = __webpack_require__(180);
+
+	var _mobxReact = __webpack_require__(179);
+
+	var _axios = __webpack_require__(181);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EventForm = (0, _mobxReact.observer)(_class = function (_Component) {
+	  _inherits(EventForm, _Component);
+
+	  function EventForm(props) {
+	    _classCallCheck(this, EventForm);
+
+	    return _possibleConstructorReturn(this, (EventForm.__proto__ || Object.getPrototypeOf(EventForm)).call(this, props));
+	  }
+
+	  _createClass(EventForm, [{
+	    key: 'handleFormSubmit',
+	    value: function handleFormSubmit(e) {
+	      var _this2 = this;
+
+	      e.preventDefault();
+	      var _refs = this.refs,
+	          date = _refs.date,
+	          title = _refs.title,
+	          description = _refs.description,
+	          city = _refs.city,
+	          state = _refs.state;
+	      var store = this.props.store;
+
+	      _axios2.default.post('/api/events', {
+	        data: {
+	          date: date.value,
+	          title: title.value,
+	          description: description.value,
+	          city: city.value,
+	          state: state.value
+	        }
+	      }).then(function (response) {
+	        console.log(response);
+
+	        if (response.data.error) {
+	          store.setFormError(response.data.error);
+	        } else {
+	          _this2.props.store.resetFormError();
+	          store.setUser(response.data);
+	          store.setCurrentEventAction('VIEW');
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+
+	      return _react2.default.createElement(
+	        'form',
+	        { onSubmit: this.handleFormSubmit.bind(this), action: '', className: 'form event-form' },
+	        _react2.default.createElement(
+	          'fieldset',
+	          { className: 'form-fieldset' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'title', className: 'form-label' },
+	            'Event Title'
+	          ),
+	          _react2.default.createElement('input', { ref: 'title', type: 'text', className: 'form-input', id: 'title', name: 'title', placeholder: 'Enter Event Title' })
+	        ),
+	        _react2.default.createElement(
+	          'fieldset',
+	          { className: 'form-fieldset' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'date', className: 'form-label' },
+	            'Date'
+	          ),
+	          _react2.default.createElement('input', { ref: 'date', type: 'text', className: 'form-input', id: 'date', name: 'date', placeholder: 'mm-dd-yy' })
+	        ),
+	        _react2.default.createElement(
+	          'fieldset',
+	          { className: 'form-fieldset' },
+	          _react2.default.createElement(
+	            'label',
+	            { htmlFor: 'description', className: 'form-label' },
+	            'Description'
+	          ),
+	          _react2.default.createElement('input', { ref: 'description', type: 'text', className: 'form-input', id: 'description', name: 'description', placeholder: 'Enter a Description' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'inline-row' },
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-fieldset' },
+	            _react2.default.createElement(
+	              'label',
+	              { htmlFor: 'city', className: 'form-label' },
+	              'City'
+	            ),
+	            _react2.default.createElement('input', { ref: 'city', type: 'text', className: 'form-input', id: 'city', name: 'city', placeholder: 'Enter a City' })
+	          ),
+	          _react2.default.createElement(
+	            'fieldset',
+	            { className: 'form-fieldset' },
+	            _react2.default.createElement(
+	              'label',
+	              { htmlFor: 'state', className: 'form-label' },
+	              'State'
+	            ),
+	            _react2.default.createElement('input', { ref: 'state', type: 'text', className: 'form-input', id: 'state', name: 'state', placeholder: 'CA' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-blue', type: 'submit' },
+	          this.props.type
+	        )
+	      );
+	    }
+	  }]);
+
+	  return EventForm;
+	}(_react.Component)) || _class;
+
+	exports.default = EventForm;
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3;
 
 	var _mobx = __webpack_require__(180);
 
@@ -27151,31 +27345,62 @@
 	}
 
 	var User = (_class = function () {
-	  function User(name) {
+	  function User() {
 	    _classCallCheck(this, User);
 
-	    _initDefineProp(this, 'name', _descriptor, this);
+	    _initDefineProp(this, 'user', _descriptor, this);
 
-	    _initDefineProp(this, 'user', _descriptor2, this);
+	    _initDefineProp(this, 'currentEventAction', _descriptor2, this);
 
-	    this.name = name;
-	  }
+	    _initDefineProp(this, 'formError', _descriptor3, this);
+
+	    this.currentEventAction = 'VIEW';
+	  } //value is either view, create edit, or delete
+
 
 	  _createClass(User, [{
+	    key: 'setCurrentEventAction',
+	    value: function setCurrentEventAction(action) {
+	      if (action !== 'VIEW' && action !== 'CREATE' && action !== 'EDIT' && action !== 'DELETE') {
+	        throw new Error('Incorrect action type: ' + action);
+	      } else {
+	        this.currentEventAction = action;
+	      }
+	    }
+	  }, {
+	    key: 'setFormError',
+	    value: function setFormError(err) {
+	      this.formError = err;
+	    }
+	  }, {
+	    key: 'resetFormError',
+	    value: function resetFormError() {
+	      this.formError = null;
+	    }
+	  }, {
 	    key: 'setUser',
 	    value: function setUser(user) {
 	      this.user = user;
+	      console.log('user set', this.user);
+	    }
+	  }, {
+	    key: 'name',
+	    get: function get() {
+	      return this.user.name || '3rr';
 	    }
 	  }]);
 
 	  return User;
-	}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.observable], {
+	}(), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'user', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: null
-	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'user', [_mobx.observable], {
+	}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, 'currentEventAction', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: null
-	}), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype)), _class);
+	}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'formError', [_mobx.observable], {
+	  enumerable: true,
+	  initializer: null
+	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype)), _class);
 	exports.default = User;
 
 /***/ }

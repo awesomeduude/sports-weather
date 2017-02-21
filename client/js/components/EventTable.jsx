@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 
-const EventTable = observer(({ user }) =>
+const EventTable = observer(props =>
   <table className='event-table' cellSpacing='0'>
     <thead>
       <tr>
@@ -16,7 +16,7 @@ const EventTable = observer(({ user }) =>
     </thead>
     <tbody>
       {
-        user.events.map(event =>
+        props.user.events.map(event =>
         <tr key={event.id}>
           <td className="event-data">{event.id}</td>
           <td className="event-data">{event.title}</td>
@@ -25,8 +25,8 @@ const EventTable = observer(({ user }) =>
           <td className="event-data">{event.state}</td>
           <td className="event-data">{event.description}</td>
           <td className="event-data">
-            <i className="fa fa-pencil-square-o"></i>
-            <i className="fa fa-trash-o"></i>
+            <i onClick={props.handleEditEventClick} className="fa fa-pencil-square-o"/>
+            <i onClick={props.handleDeleteEventClick} className="fa fa-trash-o"/>
           </td>
         </tr>
         )

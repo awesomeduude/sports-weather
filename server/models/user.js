@@ -38,8 +38,10 @@ module.exports.addEvent = (email, eventData, callback) => {
   User.findOne(query, (err,user) => {
     user.events.push(eventData)
     user.save()
+    callback(user)
   }).then((response) => {
-    callback()
+    // callback(response)
+    // console.log('resp00bse', response);
   })
   eventData.email = email
   Event.createEvent(eventData)
