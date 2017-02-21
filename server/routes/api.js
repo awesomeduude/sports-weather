@@ -58,6 +58,39 @@ router.delete('/events', (req,res) => {
     return res.json({error: 'Please login'})
   }
 })
+router.put('/events', (req,res) => {
+  const eventData = req.body.data
+  const { date, title, description, city, state, id } = eventData
+  const { events, email } = req.user
+
+  const formData = {date,title,description,city, state}
+
+  //check if valid date, and valid city
+  if (!isDate(date)) {
+    return res.json({error: 'Invalid Date'})
+  }
+  //correct format for api call
+  const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/${state}/${city.replace(' ', '_')}.json`
+
+  axios.get(url).then((response) => {
+    //not a valid city
+
+    if (!response.data.forecast) {
+      const error = 'The city you entered was not found in the state'
+      return res.json({error})
+    } else{ //user entered valid city
+      if(email) {
+        User.editEvent(email, eventData, (user) => {
+
+          return res.json(user)
+        })
+      } else{
+        console.log('not logged in');
+        return res.json({error: 'Please login'})
+      }
+    }
+  })
+})
 function isDate(date) {
   return !isNaN(Date.parse(date))
 }

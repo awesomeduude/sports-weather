@@ -29,7 +29,7 @@ module.exports.deleteEvent = (id) => {
   const query = {'_id': id}
 
   Event.findOne(query, (err, event) => {
-    console.log('trying to delete');
+
     if (event) {
       event.remove()
       event.save()

@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs')
 const Event = require('./event')
 
 const userSchema = Schema({
-
   name: String,
   email: {
     type: String,
@@ -15,7 +14,6 @@ const userSchema = Schema({
   phone: String,
   events: [
     {
-      id: Number,
       date: String,
       title: String,
       description: String,
@@ -65,25 +63,25 @@ module.exports.deleteEvent = (email, id, callback) => {
   })
 }
 module.exports.editEvent = (email, newEvent, callback) => {
-  console.log('newevent%%', newEvent);
   const query = {email}
+
+  newEvent.id = mongoose.Types.ObjectId(newEvent.id)
   User.findOne(query, (err, user) => {
     let { events } = user
-    console.log('events%%', events);
 
-    const temp = events.map((event) => {
-      if (event.id == newEvent.id) {
-        console.log('evnet?*7&', event)
-        return newEvent
-      } else{
-        return event
-      }
+    //deletes the old event
+    const temp = events.filter((event) => {
+        return (event._id.toString() !== newEvent.id.toString())
     })
+    //adds the updated event
+    temp.push(newEvent)
     user.events = temp
     user.save()
+
+    callback(user)
     //edit EVENT SCHEMA too
   }).then((response) => {
-    callback()
+
   })
 }
 module.exports.getUserByEmail = (email, callback) => {

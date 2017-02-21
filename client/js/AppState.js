@@ -4,8 +4,10 @@ class User {
   @observable user
   @observable currentEventAction //value is either view, create edit, or delete
   @observable formError
+  @observable eventBeingEdited //the event that is currently being edited by the user
   constructor() {
     this.currentEventAction = 'VIEW'
+    this.resetEventBeingEdited()
   }
   @computed get name() {
     return this.user.name || '3rr'
@@ -18,6 +20,12 @@ class User {
       this.currentEventAction = action
     }
   }
+  @action setEventBeingEdited(event) {
+    this.eventBeingEdited = event
+  }
+  @action resetEventBeingEdited() {
+    this.eventBeingEdited = {title: '', date: '', city:'', state:'', description:''}
+  }
   @action setFormError(err) {
     this.formError = err
   }
@@ -26,7 +34,7 @@ class User {
   }
   @action setUser(user) {
     this.user = user
-    console.log('user set', this.user);
+
   }
 }
 

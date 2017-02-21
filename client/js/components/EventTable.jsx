@@ -25,7 +25,7 @@ const EventTable = observer(props =>
           <td className="event-data">{event.state}</td>
           <td className="event-data">{event.description}</td>
           <td className="event-data">
-            <i onClick={props.handleEditEventClick} className="fa fa-pencil-square-o"/>
+            <i onClick={() => {props.handleEditEventClick(event) }} className="fa fa-pencil-square-o"/>
             <i onClick={() => {props.handleDeleteEventClick(event._id) }} className="fa fa-trash-o"/>
           </td>
         </tr>

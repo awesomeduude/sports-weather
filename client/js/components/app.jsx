@@ -21,12 +21,13 @@ class App extends Component {
   handleAddEventClick() {
     this.props.store.setCurrentEventAction('CREATE')
   }
-  handleEditEventClick() {
+  handleEditEventClick(event) {
     this.props.store.setCurrentEventAction('EDIT')
-    console.log('editingg')
+    this.props.store.setEventBeingEdited(event)
+
+
   }
   handleDeleteEventClick(id) {
-    console.log('idd', id)
 
     this.props.store.setCurrentEventAction('DELETE')
     if (confirm('Are you sure you want to delete this event?')) {

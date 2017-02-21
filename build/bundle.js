@@ -21570,8 +21570,9 @@
 	    }
 	  }, {
 	    key: 'handleEditEventClick',
-	    value: function handleEditEventClick() {
+	    value: function handleEditEventClick(event) {
 	      this.props.store.setCurrentEventAction('EDIT');
+	      this.props.store.setEventBeingEdited(event);
 	      console.log('editingg');
 	    }
 	  }, {
@@ -27140,7 +27141,9 @@
 	          _react2.default.createElement(
 	            'td',
 	            { className: 'event-data' },
-	            _react2.default.createElement('i', { onClick: props.handleEditEventClick, className: 'fa fa-pencil-square-o' }),
+	            _react2.default.createElement('i', { onClick: function onClick() {
+	                props.handleEditEventClick(event);
+	              }, className: 'fa fa-pencil-square-o' }),
 	            _react2.default.createElement('i', { onClick: function onClick() {
 	                props.handleDeleteEventClick(event._id);
 	              }, className: 'fa fa-trash-o' })
@@ -27210,29 +27213,52 @@
 	          state = _refs.state;
 	      var store = this.props.store;
 
-	      _axios2.default.post('/api/events', {
-	        data: {
-	          date: date.value,
-	          title: title.value,
-	          description: description.value,
-	          city: city.value,
-	          state: state.value
-	        }
-	      }).then(function (response) {
-	        console.log(response);
 
-	        if (response.data.error) {
-	          store.setFormError(response.data.error);
-	        } else {
-	          _this2.props.store.resetFormError();
-	          store.setUser(response.data);
-	          store.setCurrentEventAction('VIEW');
-	        }
-	      });
+	      var formData = {
+	        date: date.value,
+	        title: title.value,
+	        description: description.value,
+	        city: city.value,
+	        state: state.value
+	      };
+	      if (store.currentEventAction === 'CREATE') {
+	        _axios2.default.post('/api/events', {
+	          data: formData
+	        }).then(function (response) {
+
+	          _this2.handleFormResponse(response);
+	        });
+	      } else if (store.currentEventAction === 'EDIT') {
+	        formData.id = store.eventBeingEdited._id;
+
+	        _axios2.default.put('/api/events', {
+	          data: formData
+	        }).then(function (response) {
+	          _this2.handleFormResponse(response);
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'handleFormResponse',
+	    value: function handleFormResponse(response) {
+	      if (response.data.error) {
+	        store.setFormError(response.data.error);
+	      } else {
+	        this.props.store.resetFormError();
+	        store.setUser(response.data);
+	        store.setCurrentEventAction('VIEW');
+	        store.resetEventBeingEdited();
+	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var eventBeingEdited = this.props.store.eventBeingEdited;
+	      var title = eventBeingEdited.title,
+	          date = eventBeingEdited.date,
+	          city = eventBeingEdited.city,
+	          state = eventBeingEdited.state,
+	          description = eventBeingEdited.description;
 
 	      return _react2.default.createElement(
 	        'form',
@@ -27245,7 +27271,7 @@
 	            { htmlFor: 'title', className: 'form-label' },
 	            'Event Title'
 	          ),
-	          _react2.default.createElement('input', { ref: 'title', type: 'text', className: 'form-input', id: 'title', name: 'title', placeholder: 'Enter Event Title' })
+	          _react2.default.createElement('input', { defaultValue: title, ref: 'title', type: 'text', className: 'form-input', id: 'title', name: 'title', placeholder: 'Enter Event Title' })
 	        ),
 	        _react2.default.createElement(
 	          'fieldset',
@@ -27255,7 +27281,7 @@
 	            { htmlFor: 'date', className: 'form-label' },
 	            'Date'
 	          ),
-	          _react2.default.createElement('input', { ref: 'date', type: 'text', className: 'form-input', id: 'date', name: 'date', placeholder: 'mm-dd-yy' })
+	          _react2.default.createElement('input', { defaultValue: date, ref: 'date', type: 'text', className: 'form-input', id: 'date', name: 'date', placeholder: 'mm-dd-yy' })
 	        ),
 	        _react2.default.createElement(
 	          'fieldset',
@@ -27265,7 +27291,7 @@
 	            { htmlFor: 'description', className: 'form-label' },
 	            'Description'
 	          ),
-	          _react2.default.createElement('input', { ref: 'description', type: 'text', className: 'form-input', id: 'description', name: 'description', placeholder: 'Enter a Description' })
+	          _react2.default.createElement('input', { defaultValue: description, ref: 'description', type: 'text', className: 'form-input', id: 'description', name: 'description', placeholder: 'Enter a Description' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -27278,7 +27304,7 @@
 	              { htmlFor: 'city', className: 'form-label' },
 	              'City'
 	            ),
-	            _react2.default.createElement('input', { ref: 'city', type: 'text', className: 'form-input', id: 'city', name: 'city', placeholder: 'Enter a City' })
+	            _react2.default.createElement('input', { defaultValue: city, ref: 'city', type: 'text', className: 'form-input', id: 'city', name: 'city', placeholder: 'Enter a City' })
 	          ),
 	          _react2.default.createElement(
 	            'fieldset',
@@ -27288,7 +27314,7 @@
 	              { htmlFor: 'state', className: 'form-label' },
 	              'State'
 	            ),
-	            _react2.default.createElement('input', { ref: 'state', type: 'text', className: 'form-input', id: 'state', name: 'state', placeholder: 'CA' })
+	            _react2.default.createElement('input', { defaultValue: state, ref: 'state', type: 'text', className: 'form-input', id: 'state', name: 'state', placeholder: 'CA' })
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -27317,7 +27343,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3;
+	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
 
 	var _mobx = __webpack_require__(180);
 
@@ -27367,6 +27393,8 @@
 	}
 
 	var User = (_class = function () {
+	  //the event that is currently being edited by the user
+	  //value is either view, create edit, or delete
 	  function User() {
 	    _classCallCheck(this, User);
 
@@ -27376,9 +27404,11 @@
 
 	    _initDefineProp(this, 'formError', _descriptor3, this);
 
-	    this.currentEventAction = 'VIEW';
-	  } //value is either view, create edit, or delete
+	    _initDefineProp(this, 'eventBeingEdited', _descriptor4, this);
 
+	    this.currentEventAction = 'VIEW';
+	    this.resetEventBeingEdited();
+	  }
 
 	  _createClass(User, [{
 	    key: 'setCurrentEventAction',
@@ -27388,6 +27418,16 @@
 	      } else {
 	        this.currentEventAction = action;
 	      }
+	    }
+	  }, {
+	    key: 'setEventBeingEdited',
+	    value: function setEventBeingEdited(event) {
+	      this.eventBeingEdited = event;
+	    }
+	  }, {
+	    key: 'resetEventBeingEdited',
+	    value: function resetEventBeingEdited() {
+	      this.eventBeingEdited = { title: '', date: '', city: '', state: '', description: '' };
 	    }
 	  }, {
 	    key: 'setFormError',
@@ -27403,7 +27443,6 @@
 	    key: 'setUser',
 	    value: function setUser(user) {
 	      this.user = user;
-	      console.log('user set', this.user);
 	    }
 	  }, {
 	    key: 'name',
@@ -27422,7 +27461,10 @@
 	}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'formError', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: null
-	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype)), _class);
+	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'eventBeingEdited', [_mobx.observable], {
+	  enumerable: true,
+	  initializer: null
+	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype)), _class);
 	exports.default = User;
 
 /***/ }
