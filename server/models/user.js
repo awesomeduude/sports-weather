@@ -54,13 +54,14 @@ module.exports.deleteEvent = (email, id, callback) => {
       let { events } = user
 
       const temp = events.filter((event) => {
-          return (event.id.toString() !== id.toString())
+          return (event._id.toString() !== id.toString())
       })
 
       user.events = temp
       user.save()
+      callback(user)
   }).then((response) => {
-    callback()
+
   })
 }
 module.exports.editEvent = (email, newEvent, callback) => {

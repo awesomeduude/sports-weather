@@ -21572,11 +21572,31 @@
 	    key: 'handleEditEventClick',
 	    value: function handleEditEventClick() {
 	      this.props.store.setCurrentEventAction('EDIT');
+	      console.log('editingg');
 	    }
 	  }, {
 	    key: 'handleDeleteEventClick',
-	    value: function handleDeleteEventClick() {
+	    value: function handleDeleteEventClick(id) {
+	      var _this3 = this;
+
+	      console.log('idd', id);
+
 	      this.props.store.setCurrentEventAction('DELETE');
+	      if (confirm('Are you sure you want to delete this event?')) {
+	        _axios2.default.delete('/api/events', {
+	          data: {
+	            id: id
+	          }
+	        }).then(function (response) {
+	          if (response.data.error) {
+	            store.setFormError(response.data.error);
+	          } else {
+	            _this3.props.store.resetFormError();
+	            store.setUser(response.data);
+	            store.setCurrentEventAction('VIEW');
+	          }
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -27086,11 +27106,11 @@
 	      props.user.events.map(function (event) {
 	        return _react2.default.createElement(
 	          'tr',
-	          { key: event.id },
+	          { key: event._id },
 	          _react2.default.createElement(
 	            'td',
 	            { className: 'event-data' },
-	            event.id
+	            event._id
 	          ),
 	          _react2.default.createElement(
 	            'td',
@@ -27121,7 +27141,9 @@
 	            'td',
 	            { className: 'event-data' },
 	            _react2.default.createElement('i', { onClick: props.handleEditEventClick, className: 'fa fa-pencil-square-o' }),
-	            _react2.default.createElement('i', { onClick: props.handleDeleteEventClick, className: 'fa fa-trash-o' })
+	            _react2.default.createElement('i', { onClick: function onClick() {
+	                props.handleDeleteEventClick(event._id);
+	              }, className: 'fa fa-trash-o' })
 	          )
 	        );
 	      })

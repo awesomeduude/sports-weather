@@ -4,6 +4,7 @@ const axios = require('axios')
 const router = express.Router()
 
 const User = require('../models/user')
+const Event = require('../models/event')
 const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
 
 router.get('/', (req, res) => {
@@ -41,7 +42,21 @@ router.post('/events', (req,res) => {
       }
     }
   })
+})
+router.delete('/events', (req,res) => {
+  const { id } = req.body
+  const { email } = req.user
 
+  if (email) {
+
+    User.deleteEvent(email, id, (user) => {
+        return res.json(user)
+    })
+    Event.deleteEvent(id)
+
+  } else{
+    return res.json({error: 'Please login'})
+  }
 })
 function isDate(date) {
   return !isNaN(Date.parse(date))

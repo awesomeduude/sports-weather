@@ -25,12 +25,15 @@ module.exports.getAllEvents = (date, callback) => {
     callback(response)
   })
 }
-module.exports.deleteEvent = (email, date, id) => {
-  const query = {email, date, id}
+module.exports.deleteEvent = (id) => {
+  const query = {'_id': id}
 
   Event.findOne(query, (err, event) => {
+    console.log('trying to delete');
+    if (event) {
+      event.remove()
+      event.save()
+    }
 
-    event.remove()
-    event.save()
   })
 }

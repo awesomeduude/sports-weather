@@ -23,9 +23,28 @@ class App extends Component {
   }
   handleEditEventClick() {
     this.props.store.setCurrentEventAction('EDIT')
+    console.log('editingg')
   }
-  handleDeleteEventClick() {
+  handleDeleteEventClick(id) {
+    console.log('idd', id)
+
     this.props.store.setCurrentEventAction('DELETE')
+    if (confirm('Are you sure you want to delete this event?')) {
+      axios.delete('/api/events', {
+        data:{
+          id
+        }
+      }).then(response => {
+        if (response.data.error) {
+          store.setFormError(response.data.error)
+        } else {
+          this.props.store.resetFormError()
+          store.setUser(response.data)
+          store.setCurrentEventAction('VIEW')
+        }
+      })
+    }
+
   }
   render() {
     const { user, currentEventAction } = this.props.store

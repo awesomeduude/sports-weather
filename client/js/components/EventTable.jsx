@@ -17,8 +17,8 @@ const EventTable = observer(props =>
     <tbody>
       {
         props.user.events.map(event =>
-        <tr key={event.id}>
-          <td className="event-data">{event.id}</td>
+        <tr key={event._id}>
+          <td className="event-data">{event._id}</td>
           <td className="event-data">{event.title}</td>
           <td className="event-data">{event.date}</td>
           <td className="event-data">{event.city}</td>
@@ -26,7 +26,7 @@ const EventTable = observer(props =>
           <td className="event-data">{event.description}</td>
           <td className="event-data">
             <i onClick={props.handleEditEventClick} className="fa fa-pencil-square-o"/>
-            <i onClick={props.handleDeleteEventClick} className="fa fa-trash-o"/>
+            <i onClick={() => {props.handleDeleteEventClick(event._id) }} className="fa fa-trash-o"/>
           </td>
         </tr>
         )
