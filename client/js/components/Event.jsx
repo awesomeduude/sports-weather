@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 import axios from 'axios'
 
 import EventForm from './EventForm.jsx'
@@ -7,7 +7,7 @@ import EventTable from './EventTable.jsx'
 import Navbar from './Navbar.jsx'
 
 
-@observer
+@inject('store') @observer
 class Event extends Component {
   constructor(props){
     super(props)

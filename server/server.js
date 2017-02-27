@@ -18,7 +18,7 @@ const User = require('./models/user')
 
 const app = express()
 
-app.use('/build',express.static(path.join(__dirname,'..','/build')))
+app.use(express.static(path.join(__dirname,'..','/build')))
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname,'/views'))
@@ -49,13 +49,17 @@ app.use(session(sess))
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use('/', signup)
-app.use('/', login)
-app.use('/', dashboard)
-app.use('/', events)
-app.use('/', signout)
-app.use('/', weather)
+// app.use('/', signup)
+// app.use('/', login)
+// app.use('/', dashboard)
+// app.use('/', events)
+// app.use('/', signout)
+// app.use('/', weather)
 app.use('/api', api)
+
+app.get('*', (req,res) => {
+  res.sendFile(path.join(__dirname,'..','/build', 'index.html'))
+})
 
 
 //const database = 'mongodb://127.0.0.1/myDb'

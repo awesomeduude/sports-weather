@@ -8,11 +8,11 @@ class EventForm extends Component {
 
   constructor(props) {
     super(props)
-
   }
+
   handleFormSubmit(e) {
     e.preventDefault()
-    const { date, title , description, city, state} = this.refs
+    const { date, title , description, city, state } = this.refs
     const { store } = this.props
 
     const formData = {
