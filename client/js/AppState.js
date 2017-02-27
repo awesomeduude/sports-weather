@@ -34,7 +34,10 @@ class User {
   }
   @action setUser(user) {
     this.user = user
-
+  }
+  @action logout() {
+    this.user = null
+    console.log('logged out', this.user);
   }
 }
 

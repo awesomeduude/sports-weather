@@ -58,7 +58,7 @@
 
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
-	var _AppState = __webpack_require__(269);
+	var _AppState = __webpack_require__(270);
 
 	var _AppState2 = _interopRequireDefault(_AppState);
 
@@ -21536,6 +21536,10 @@
 
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
+	var _logout = __webpack_require__(271);
+
+	var _logout2 = _interopRequireDefault(_logout);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21563,6 +21567,8 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        _mobxReact.Provider,
 	        { store: this.props.user },
@@ -21574,7 +21580,14 @@
 	            { path: '/', component: _App2.default },
 	            _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: _Dashboard2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'events', component: _Event2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default }),
+	            _react2.default.createElement(
+	              _reactRouter.Route,
+	              { path: 'logout', onEnter: function onEnter() {
+	                  return (0, _logout2.default)(_this2.props.user);
+	                } },
+	              _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/' })
+	            )
 	          )
 	        )
 	      );
@@ -30435,6 +30448,8 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _dec, _class;
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -30453,7 +30468,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var App = function (_Component) {
+	var App = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = function (_Component) {
 	  _inherits(App, _Component);
 
 	  function App() {
@@ -30470,7 +30485,7 @@
 	        null,
 	        _react2.default.createElement('input', { type: 'checkBox', className: 'nav-trigger', id: 'nav-trigger' }),
 	        _react2.default.createElement('label', { htmlFor: 'nav-trigger', className: 'hamburger' }),
-	        _react2.default.createElement(_Navbar2.default, null),
+	        _react2.default.createElement(_Navbar2.default, { signedIn: this.props.store.user || null }),
 	        _react2.default.createElement(
 	          'main',
 	          { className: 'content' },
@@ -30481,8 +30496,7 @@
 	  }]);
 
 	  return App;
-	}(_react.Component);
-
+	}(_react.Component)) || _class) || _class);
 	exports.default = App;
 
 /***/ },
@@ -30519,8 +30533,8 @@
 	    ),
 	    props.signedIn ? _react2.default.createElement(
 	      _reactRouter.Link,
-	      { to: 'signout', className: 'nav-link' },
-	      'Sign Out'
+	      { to: 'logout', className: 'nav-link' },
+	      'Log Out'
 	    ) : _react2.default.createElement(
 	      _reactRouter.Link,
 	      { to: 'login', className: 'nav-link' },
@@ -32668,7 +32682,8 @@
 	exports.default = LoginForm;
 
 /***/ },
-/* 269 */
+/* 269 */,
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32781,6 +32796,12 @@
 	      this.user = user;
 	    }
 	  }, {
+	    key: 'logout',
+	    value: function logout() {
+	      this.user = null;
+	      console.log('logged out', this.user);
+	    }
+	  }, {
 	    key: 'name',
 	    get: function get() {
 	      return this.user.name || '3rr';
@@ -32800,8 +32821,32 @@
 	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'eventBeingEdited', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: null
-	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype)), _class);
+	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'logout', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'logout'), _class.prototype)), _class);
 	exports.default = User;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _axios = __webpack_require__(240);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var logout = function logout(store) {
+	  _axios2.default.get('/api/logout').then(function (response) {
+	    store.logout();
+	  });
+	};
+
+	exports.default = logout;
 
 /***/ }
 /******/ ]);

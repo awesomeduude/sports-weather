@@ -6,7 +6,7 @@ const Navbar = props =>
     <Link to='dashboard' className='nav-link'>Dashboard</Link>
     <Link to='events' className='nav-link'>Events</Link>
     {props.signedIn ?
-      <Link to='signout' className="nav-link">Sign Out</Link>
+      <Link to='logout' className="nav-link">Log Out</Link>
       :
       <Link to='login' className='nav-link'>Login</Link>
     }

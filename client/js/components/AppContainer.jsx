@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Router, Route, Link, browserHistory } from 'react-router'
+import { Router, Route, Link, IndexRedirect, browserHistory } from 'react-router'
 import { Provider } from 'mobx-react'
 
 import App from './App.jsx'
 import Dashboard from './Dashboard.jsx'
 import Event from './Event.jsx'
 import LoginPage from './LoginPage.jsx'
+import logout from './logout.js'
 
 class AppContainer extends Component {
   constructor(props) {
@@ -24,6 +25,9 @@ class AppContainer extends Component {
             <Route path='dashboard' component={Dashboard}/>
             <Route path='events' component={Event}/>
             <Route path='login' component={LoginPage} />
+            <Route path='logout' onEnter={() => logout(this.props.user)}>
+              <IndexRedirect to='/'></IndexRedirect>
+            </Route>
           </Route>
         </Router>
       </Provider>
