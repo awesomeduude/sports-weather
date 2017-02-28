@@ -8,6 +8,8 @@ import Event from './Event.jsx'
 import LoginPage from './LoginPage.jsx'
 import logout from './logout.js'
 
+import requireAuth from './requireAuth.jsx'
+
 class AppContainer extends Component {
   constructor(props) {
     super(props)
@@ -22,8 +24,8 @@ class AppContainer extends Component {
       <Provider store={this.props.user}>
         <Router history={browserHistory}>
           <Route path='/' component={App}>
-            <Route path='dashboard' component={Dashboard}/>
-            <Route path='events' component={Event}/>
+            <Route path='dashboard' component={requireAuth(Dashboard, this.props.user)}/>
+            <Route path='events' component={requireAuth(Event, this.props.user)}/>
             <Route path='login' component={LoginPage} />
             <Route path='logout' onEnter={() => logout(this.props.user)}>
               <IndexRedirect to='/'></IndexRedirect>

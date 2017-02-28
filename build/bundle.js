@@ -21536,9 +21536,13 @@
 
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
-	var _logout = __webpack_require__(271);
+	var _logout = __webpack_require__(269);
 
 	var _logout2 = _interopRequireDefault(_logout);
+
+	var _requireAuth = __webpack_require__(271);
+
+	var _requireAuth2 = _interopRequireDefault(_requireAuth);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21578,8 +21582,8 @@
 	          _react2.default.createElement(
 	            _reactRouter.Route,
 	            { path: '/', component: _App2.default },
-	            _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: _Dashboard2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'events', component: _Event2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: (0, _requireAuth2.default)(_Dashboard2.default, this.props.user) }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'events', component: (0, _requireAuth2.default)(_Event2.default, this.props.user) }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default }),
 	            _react2.default.createElement(
 	              _reactRouter.Route,
@@ -32682,7 +32686,30 @@
 	exports.default = LoginForm;
 
 /***/ },
-/* 269 */,
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _axios = __webpack_require__(240);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var logout = function logout(store) {
+	  _axios2.default.get('/api/logout').then(function (response) {
+	    store.logout();
+	  });
+	};
+
+	exports.default = logout;
+
+/***/ },
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -32799,12 +32826,16 @@
 	    key: 'logout',
 	    value: function logout() {
 	      this.user = null;
-	      console.log('logged out', this.user);
 	    }
 	  }, {
 	    key: 'name',
 	    get: function get() {
 	      return this.user.name || '3rr';
+	    }
+	  }, {
+	    key: 'isAuthenticated',
+	    get: function get() {
+	      return this.user ? true : false;
 	    }
 	  }]);
 
@@ -32821,7 +32852,7 @@
 	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'eventBeingEdited', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: null
-	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'logout', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'logout'), _class.prototype)), _class);
+	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'isAuthenticated', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'isAuthenticated'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'logout', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'logout'), _class.prototype)), _class);
 	exports.default = User;
 
 /***/ },
@@ -32834,19 +32865,53 @@
 	  value: true
 	});
 
-	var _axios = __webpack_require__(240);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _axios2 = _interopRequireDefault(_axios);
+	exports.default = function (Component, store) {
+	  var Authenticate = function (_React$Component) {
+	    _inherits(Authenticate, _React$Component);
+
+	    function Authenticate(props) {
+	      _classCallCheck(this, Authenticate);
+
+	      return _possibleConstructorReturn(this, (Authenticate.__proto__ || Object.getPrototypeOf(Authenticate)).call(this, props));
+	    }
+
+	    _createClass(Authenticate, [{
+	      key: 'componentWillMount',
+	      value: function componentWillMount() {
+
+	        if (!store.isAuthenticated) {
+	          this.context.router.push('/login');
+	        }
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(Component, this.props);
+	      }
+	    }]);
+
+	    return Authenticate;
+	  }(_react2.default.Component);
+
+	  Authenticate.contextTypes = {
+	    router: _react2.default.PropTypes.object.isRequired
+	  };
+	  return Authenticate;
+	};
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var logout = function logout(store) {
-	  _axios2.default.get('/api/logout').then(function (response) {
-	    store.logout();
-	  });
-	};
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	exports.default = logout;
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /***/ }
 /******/ ]);

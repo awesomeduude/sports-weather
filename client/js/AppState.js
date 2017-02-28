@@ -12,7 +12,9 @@ class User {
   @computed get name() {
     return this.user.name || '3rr'
   }
-
+  @computed get isAuthenticated() {
+    return this.user ? true : false
+  }
   @action setCurrentEventAction(action) {
     if (action !== 'VIEW' && action !== 'CREATE' && action !== 'EDIT' && action !== 'DELETE') {
       throw new Error('Incorrect action type: ' + action)
@@ -37,7 +39,6 @@ class User {
   }
   @action logout() {
     this.user = null
-    console.log('logged out', this.user);
   }
 }
 
