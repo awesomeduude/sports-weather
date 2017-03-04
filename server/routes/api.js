@@ -131,6 +131,41 @@ router.get('/logout', (req,res) => {
   req.logout()
   return res.json({sucess:true})
 })
+router.post('/signup', (req,res) => {
+  const { name, email, phone, password, cpassword } = req.body
+
+  req.checkBody('name', 'Name is Required').notEmpty()
+
+  req.checkBody('email', 'Email is Required').notEmpty()
+  req.checkBody('email', 'Email is not valid').isEmail()
+
+  req.checkBody('phone', 'Phone number is required').notEmpty()
+  req.checkBody('phone', 'Phone number is in incorrect format').isValidPhoneNumber()
+
+  req.checkBody('password', 'Password is Required').notEmpty()
+  req.checkBody('cpassword', 'Passwords do not match').equals(password)
+
+  const errors = req.validationErrors()
+
+  if (errors) {
+    const error = errors[0].msg
+    return res.json({error})
+  } else {
+    const newUser = new User({name, email, phone, password})
+
+    User.register(newUser, password, (err, user) => {
+
+      if (err) {
+
+        const error = err.message
+        return res.json({error})
+
+      } else {
+        return res.json({success:true})
+      }
+    });
+  }
+})
 function isDate(date) {
   return !isNaN(Date.parse(date))
 }

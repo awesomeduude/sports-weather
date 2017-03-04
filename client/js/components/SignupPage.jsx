@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
-import { observer, inject } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 
-import LoginForm from './LoginForm.jsx'
+import SignupForm from './SignupForm.jsx'
 
 @inject('store') @observer
-class LoginPage extends Component {
-
+class SignupPage extends Component {
   constructor(props) {
     super(props)
   }
-
   render() {
     return (
-      <div className="login">
+      <div>
         {this.props.store.formError &&
           <div className="errors">
+
             <p className="error-text">{this.props.store.formError}</p>
           </div>
         }
-
-        <LoginForm store={this.props.store}/>
+        <SignupForm store={this.props.store}/>
       </div>
     )
   }
 }
 
-export default LoginPage
+export default SignupPage
