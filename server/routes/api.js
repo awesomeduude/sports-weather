@@ -166,6 +166,10 @@ router.post('/signup', (req,res) => {
     });
   }
 })
+router.get('/texts', (req,res) => {
+  console.log('texting')
+  return res.json({success: "it works!"})
+})
 function isDate(date) {
   return !isNaN(Date.parse(date))
 }

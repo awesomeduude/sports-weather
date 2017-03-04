@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-var axios = require('axios')
+var axios = require('axios');
+var phone = process.env.TWILIO_KEY;
 
 function getFormattedDate(date) {
   var year = date.getFullYear();
@@ -13,16 +14,8 @@ function getFormattedDate(date) {
 function sendTexts() {
   var date = new Date()
   date = getFormattedDate(date)
-  axios.post('/user', {
-    date
-  })
-  .then((response) => {
-    console.log('sendTexts response', response);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-  console.log('texts sent, date: ', date)
+  console.log('********date*********', date);
+  console.log('twilio phone', phone);
 }
 sendTexts();
 process.exit();
