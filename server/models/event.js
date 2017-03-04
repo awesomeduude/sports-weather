@@ -21,8 +21,12 @@ module.exports.createEvent = (eventData) => {
 }
 module.exports.getAllEvents = (date, callback) => {
   const query = {date}
+
   Event.find(query).then((response) => {
     callback(response)
+
+  }).catch(err => {
+    console.log(err)
   })
 }
 module.exports.deleteEvent = (id) => {

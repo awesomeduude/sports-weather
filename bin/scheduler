@@ -1,21 +1,21 @@
 #!/usr/bin/env node
-var axios = require('axios');
-var phone = process.env.TWILIO_KEY;
+const mongoose = require('mongoose')
+const sendAllTexts = require('../server/routes/weather').sendAllTexts
+
+const database = process.env.MONGODB_URI
+mongoose.connect(database)
 
 function getFormattedDate(date) {
-  var year = date.getFullYear();
-  var month = (1 + date.getMonth()).toString();
+  const year = date.getFullYear();
+
+  let month = (1 + date.getMonth()).toString();
   month = month.length > 1 ? month : '0' + month;
-  var day = date.getDate().toString();
+
+  let day = date.getDate().toString();
   day = day.length > 1 ? day : '0' + day;
+
   return month + '/' + day + '/' + year;
 }
-
-function sendTexts() {
-  var date = new Date()
-  date = getFormattedDate(date)
-  console.log('********date*********', date);
-  console.log('twilio phone', phone);
-}
-sendTexts();
-process.exit();
+sendAllTexts('04/01/2017', () => {
+  process.exit()
+})

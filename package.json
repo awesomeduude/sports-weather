@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server/server.js",
     "w": "webpack --watch",
-    "n": "nodemon server/server.js"
+    "n": "nodemon server/server.js",
+    "h": "git commit -a --amend --no-edit && git push heroku master -f && heroku run scheduler"
   },
   "repository": {
     "type": "git",

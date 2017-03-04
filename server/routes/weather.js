@@ -31,44 +31,13 @@ router.put('/weather', (req,res) => {
   })
 
 })
-router.post('/weather', (req,res) => {
-
+router.post('/weather', (req, res) => {
   const { date } = req.body
-  console.log('received date: ', date);
-
-  Event.getAllEvents(date, (events) => {
-
-    events.forEach((event) => {
-      const { city, state, email, title, date, id } = event
-      User.findUserByEmail(email).then((user) => {
-        const { phone } = user
-
-        const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/${state}/${city.replace(' ', '_')}.json`
-
-        axios.get(url).then((response) => {
-
-          //CHANGE THE DATE WHICH WEATHER IS GOTTEN FROM(change forecastday)
-          const weather = response.data.forecast.simpleforecast.forecastday[1].conditions
-
-          const message = `The weather will be ${weather} at your event ${title} on ${date}`
-          console.log('phoNNE, message', phone, message);
-          sendText(phone, message, () => {
-            console.log('emaiil, id', email, id);
-            User.deleteEvent(email, id,() => {
-              //empty
-            })
-
-            Event.deleteEvent(email, date, id)
-
-          })
-        })
-
-      })
-    })
-
+  sendAllTexts(date, (response) => {
+    return res.json(response)
   })
-  return res.send({'sucesss': true})
 })
+
 function sendText(phoneNumber, message, callback) {
 
   twilio.sendMessage({
@@ -81,10 +50,52 @@ function sendText(phoneNumber, message, callback) {
     } else {
       callback()
     }
-    console.log('twilio response', response);
+
   })
 
-  console.log('messsage', message);
 
 }
-module.exports = router
+//module.exports = router
+
+module.exports.sendAllTexts = function sendAllTexts(date, callback) {
+
+
+  Event.getAllEvents(date, (events) => {
+
+    events.forEach((event, i, arr) => {
+      const { city, state, email, title, date, id } = event
+      User.findUserByEmail(email).then((user) => {
+        const { phone } = user
+
+        const url  = `http://api.wunderground.com/api/${weatherKey}/forecast/q/${state}/${city.replace(' ', '_')}.json`
+
+        axios.get(url).then((response) => {
+
+          //CHANGE THE DATE WHICH WEATHER IS GOTTEN FROM(change forecastday)
+          const weather = response.data.forecast.simpleforecast.forecastday[1].conditions
+
+          const message = `The weather will be ${weather} at your event ${title} on ${date}`
+
+          sendText(phone, message, () => {
+
+            // User.deleteEvent(email, id,() => {
+            //   //empty
+            // })
+            //
+            // Event.deleteEvent(email, date, id)
+            if (arr.length-1 === i){
+              callback()
+            } //change this to after the event is deleted
+
+          })
+
+
+        })
+
+      })
+    })
+
+  })
+ return {success: true}
+
+}

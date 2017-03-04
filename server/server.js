@@ -54,7 +54,7 @@ app.use(passport.session())
 // app.use('/', dashboard)
 // app.use('/', events)
 // app.use('/', signout)
-// app.use('/', weather)
+//app.use('/', weather)
 app.use('/api', api)
 
 app.get('*', (req,res) => {
