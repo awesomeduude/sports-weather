@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import Form from './Form.jsx'
+
 class LoginForm extends Component {
   constructor(props) {
     super(props)
   }
 
-  handleFormSubmit(e) {
-    e.preventDefault()
-    const { email, password } = this.refs
+  handleFormSubmit(fields) {
+
+    const { email, password } = fields
     const { store } = this.props
 
     axios.post('/api/login', {
@@ -29,17 +31,27 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit.bind(this)} method='post' className="form">
-        <fieldset className="form-fieldset">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input ref='email' type="text" className="form-input" id='email' name='email' placeholder='Enter Email' defaultValue={this.props.store.email}/>
-        </fieldset>
-        <fieldset className="form-fieldset">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input ref='password' type="password" className="form-input" id='password' name='password' placeholder='Enter Password'/>
-        </fieldset>
-        <button className="btn btn-blue" type='submit'>Login</button>
-      </form>
+      <Form
+        onFormSubmit={this.handleFormSubmit.bind(this)}
+        formType="Login"
+        fields={
+          [
+            {
+              inputType: 'text',
+              type: 'email',
+              label: 'Email',
+              placeholder: 'Enter Email'
+            },
+            {
+              inputType: 'password',
+              type: 'password',
+              label: 'Password',
+              placeholder: 'Enter Password'
+
+            }
+          ]
+        }
+      />
     )
   }
 }

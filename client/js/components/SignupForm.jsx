@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import Form from './Form.jsx'
+
 class SignupForm extends Component {
   constructor(props) {
   super(props)
   }
-  handleFormSubmit(e) {
-    e.preventDefault()
-    const { name, email, phone, password, cpassword } = this.refs
+  handleFormSubmit(fields) {
+
+    const { name, email, phone, password, cpassword } = fields
     const { store } = this.props
 
     axios.post('/api/signup', {
@@ -30,29 +32,44 @@ class SignupForm extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit.bind(this)} className="form">
-        <fieldset className="form-fieldset">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input ref="name" type="text" className="form-input" id="name" name="name" placeholder="Enter name"/>
-        </fieldset>
-        <fieldset className="form-fieldset">
-          <label htmlFor="phone" className="form-label">Phone Number</label>
-          <input ref="phone" type="tel" className="form-input" id="phone" name="phone" placeholder="123 456 7890"/>
-        </fieldset>
-        <fieldset className="form-fieldset">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input ref="email" type="text" className="form-input" id="email" name="email" placeholder="Enter email"/>
-        </fieldset>
-        <fieldset className="form-fieldset">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input ref="password" type="password" className="form-input" id="password" name="password" placeholder=" Enter password"/>
-        </fieldset>
-        <fieldset className="form-fieldset">
-          <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-          <input ref="cpassword" type="password" className="form-input" id="cpassword" name="cpassword" placeholder="Confirm password"/>
-        </fieldset>
-        <button className="btn btn-blue" type="submit">Signup</button>
-      </form>
+      <Form
+        onFormSubmit={this.handleFormSubmit.bind(this)}
+        formType="Signup"
+        fields={
+          [
+            {
+              inputType: 'text',
+              type: 'name',
+              label: 'Name',
+              placeholder: 'Enter your name'
+            },
+            {
+              inputType: 'tel',
+              type: 'phone',
+              label: 'Phone Number',
+              placeholder: '123 456 7890'
+            },
+            {
+              inputType: 'text',
+              type: 'email',
+              label: 'Email',
+              placeholder: 'Enter email'
+            },
+            {
+              inputType: 'password',
+              type: 'password',
+              label: 'Password',
+              placeholder: 'Enter password'
+            },
+            {
+              inputType: 'password',
+              type: 'cpassword',
+              label: 'Confirm Password',
+              placeholder: 'Retype your password'
+            }
+          ]
+        }
+      />
     )
   }
 
