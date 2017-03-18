@@ -8,6 +8,7 @@ module.exports = {
     path:'./build/',
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
   plugins: [
     new ExtractTextPlugin('main.css')
   ],
