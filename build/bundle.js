@@ -58,7 +58,7 @@
 
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 
-	var _AppState = __webpack_require__(272);
+	var _AppState = __webpack_require__(273);
 
 	var _AppState2 = _interopRequireDefault(_AppState);
 
@@ -21536,15 +21536,15 @@
 
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
-	var _SignupPage = __webpack_require__(273);
+	var _SignupPage = __webpack_require__(269);
 
 	var _SignupPage2 = _interopRequireDefault(_SignupPage);
 
-	var _logout = __webpack_require__(270);
+	var _logout = __webpack_require__(271);
 
 	var _logout2 = _interopRequireDefault(_logout);
 
-	var _requireAuth = __webpack_require__(271);
+	var _requireAuth = __webpack_require__(272);
 
 	var _requireAuth2 = _interopRequireDefault(_requireAuth);
 
@@ -30707,6 +30707,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Events'
+	        ),
 	        user ? _react2.default.createElement(
 	          'div',
 	          null,
@@ -32562,6 +32567,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'login' },
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Login'
+	        ),
 	        this.props.store.formError && _react2.default.createElement(
 	          'div',
 	          { className: 'errors' },
@@ -32689,6 +32699,76 @@
 
 /***/ },
 /* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _mobxReact = __webpack_require__(234);
+
+	var _SignupForm = __webpack_require__(270);
+
+	var _SignupForm2 = _interopRequireDefault(_SignupForm);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SignupPage = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = function (_Component) {
+	  _inherits(SignupPage, _Component);
+
+	  function SignupPage(props) {
+	    _classCallCheck(this, SignupPage);
+
+	    return _possibleConstructorReturn(this, (SignupPage.__proto__ || Object.getPrototypeOf(SignupPage)).call(this, props));
+	  }
+
+	  _createClass(SignupPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h1',
+	          null,
+	          'Signup'
+	        ),
+	        this.props.store.formError && _react2.default.createElement(
+	          'div',
+	          { className: 'errors' },
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'error-text' },
+	            this.props.store.formError
+	          )
+	        ),
+	        _react2.default.createElement(_SignupForm2.default, { store: this.props.store })
+	      );
+	    }
+	  }]);
+
+	  return SignupPage;
+	}(_react.Component)) || _class) || _class);
+	exports.default = SignupPage;
+
+/***/ },
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32831,7 +32911,7 @@
 	exports.default = SignupForm;
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32855,7 +32935,7 @@
 	exports.default = logout;
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32913,7 +32993,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33057,71 +33137,6 @@
 	  initializer: null
 	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'isAuthenticated', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'isAuthenticated'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'logout', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'logout'), _class.prototype)), _class);
 	exports.default = User;
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _dec, _class;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _mobxReact = __webpack_require__(234);
-
-	var _SignupForm = __webpack_require__(269);
-
-	var _SignupForm2 = _interopRequireDefault(_SignupForm);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SignupPage = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = function (_Component) {
-	  _inherits(SignupPage, _Component);
-
-	  function SignupPage(props) {
-	    _classCallCheck(this, SignupPage);
-
-	    return _possibleConstructorReturn(this, (SignupPage.__proto__ || Object.getPrototypeOf(SignupPage)).call(this, props));
-	  }
-
-	  _createClass(SignupPage, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.props.store.formError && _react2.default.createElement(
-	          'div',
-	          { className: 'errors' },
-	          _react2.default.createElement(
-	            'p',
-	            { className: 'error-text' },
-	            this.props.store.formError
-	          )
-	        ),
-	        _react2.default.createElement(_SignupForm2.default, { store: this.props.store })
-	      );
-	    }
-	  }]);
-
-	  return SignupPage;
-	}(_react.Component)) || _class) || _class);
-	exports.default = SignupPage;
 
 /***/ }
 /******/ ]);

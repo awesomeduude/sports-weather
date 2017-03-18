@@ -53,6 +53,7 @@ class Event extends Component {
     const { user, currentEventAction } = this.props.store
     return (
       <div>
+      <h1>Events</h1>
         {user ?
           <div>
             <EventTable user={user} handleEditEventClick={this.handleEditEventClick} handleDeleteEventClick={this.handleDeleteEventClick}/>

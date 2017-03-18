@@ -13,6 +13,7 @@ class LoginPage extends Component {
   render() {
     return (
       <div className="login">
+        <h1>Login</h1>
         {this.props.store.formError &&
           <div className="errors">
             <p className="error-text">{this.props.store.formError}</p>
