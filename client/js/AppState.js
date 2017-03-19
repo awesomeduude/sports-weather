@@ -10,7 +10,7 @@ class User {
     this.resetEventBeingEdited()
   }
   @computed get name() {
-    return this.user.name || '3rr'
+    return this.user ? this.user.name : ''
   }
   @computed get isAuthenticated() {
     return this.user ? true : false

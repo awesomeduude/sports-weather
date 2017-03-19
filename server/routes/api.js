@@ -10,14 +10,13 @@ const Event = require('../models/event')
 const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
 
 router.get('/', (req, res) => {
-  return res.json({user: req.user})
+  const response = {user: req.user || null}
+  return res.json(response)
 })
 router.post('/events', (req,res) => {
 
   const { date, title, description, city, state } = req.body.data
-  const { events, email } = req.user
-
-  const formData = {date,title,description,city, state}
+  const { email } = req.user
 
   //check if valid date, and valid city
   if (!isDate(date)) {
@@ -39,13 +38,13 @@ router.post('/events', (req,res) => {
           return res.json(response)
         })
       } else{
-        console.log('not logged in');
         return res.json({error: 'Please login'})
       }
     }
   })
 })
 router.delete('/events', (req,res) => {
+
   const { id } = req.body
   const { email } = req.user
 
@@ -62,10 +61,8 @@ router.delete('/events', (req,res) => {
 })
 router.put('/events', (req,res) => {
   const eventData = req.body.data
-  const { date, title, description, city, state, id } = eventData
-  const { events, email } = req.user
-
-  const formData = {date,title,description,city, state}
+  const { date, city, state } = eventData
+  const { email } = req.user
 
   //check if valid date, and valid city
   if (!isDate(date)) {
@@ -87,7 +84,6 @@ router.put('/events', (req,res) => {
           return res.json(user)
         })
       } else{
-        console.log('not logged in');
         return res.json({error: 'Please login'})
       }
     }
@@ -101,7 +97,7 @@ passport.deserializeUser(User.deserializeUser());
 router.post('/login',  (req, res, next) => {
 
   const { email, password } = req.body
-  console.log('posted&&&&&&&', email, password);
+
   req.checkBody('email', 'Please enter your email').notEmpty()
   req.checkBody('password', 'Please enter your password').notEmpty()
 

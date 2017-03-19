@@ -30591,7 +30591,7 @@
 	      'h2',
 	      null,
 	      'Hello, ',
-	      props.store.name || 'no us3r'
+	      props.store.name
 	    )
 	  );
 	}));
@@ -33001,12 +33001,20 @@
 	    }
 	
 	    _createClass(Authenticate, [{
-	      key: 'componentWillMount',
-	      value: function componentWillMount() {
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        var _this2 = this;
 	
-	        if (!store.isAuthenticated) {
-	          this.context.router.push('/login');
-	        }
+	        console.log('did mounted');
+	        _axios2.default.get('/api/').then(function (response) {
+	          console.log(response.data.user);
+	          if (response.data.user) {
+	            store.setUser(response.data.user);
+	          }
+	          if (!store.isAuthenticated) {
+	            _this2.context.router.push('/login');
+	          }
+	        });
 	      }
 	    }, {
 	      key: 'render',
@@ -33027,6 +33035,10 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _axios = __webpack_require__(240);
+	
+	var _axios2 = _interopRequireDefault(_axios);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33157,7 +33169,7 @@
 	  }, {
 	    key: 'name',
 	    get: function get() {
-	      return this.user.name || '3rr';
+	      return this.user ? this.user.name : '';
 	    }
 	  }, {
 	    key: 'isAuthenticated',
