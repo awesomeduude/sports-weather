@@ -6,7 +6,9 @@ const database = process.env.MONGODB_URI
 mongoose.connect(database)
 
 function getFormattedDate(date) {
-  const year = date.getFullYear();
+  date = new Date(date.setDate(date.getDate() + 1))
+
+  let year = date.getFullYear();
 
   let month = (1 + date.getMonth()).toString();
   month = month.length > 1 ? month : '0' + month;
@@ -16,6 +18,8 @@ function getFormattedDate(date) {
 
   return month + '/' + day + '/' + year;
 }
-sendAllTexts('04/01/2017', () => {
+const date = getFormattedDate(new Date())
+
+sendAllTexts(date, () => {
   process.exit()
 })

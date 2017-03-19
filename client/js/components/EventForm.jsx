@@ -63,7 +63,7 @@ class EventForm extends Component {
         </fieldset>
         <fieldset className="form-fieldset">
           <label htmlFor="date" className="form-label">Date</label>
-          <input defaultValue={date} ref='date' type="text" className="form-input" id="date" name='date' placeholder='mm-dd-yy'/>
+          <input defaultValue={date} ref='date' type="text" className="form-input" id="date" name='date' placeholder='mm/dd/yyyy'/>
         </fieldset>
         <fieldset className="form-fieldset">
           <label htmlFor="description" className="form-label">Description</label>

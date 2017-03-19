@@ -91,8 +91,8 @@ router.put('/events', (req,res) => {
 })
 passport.use(User.createStrategy())
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 router.post('/login',  (req, res, next) => {
 
@@ -159,11 +159,16 @@ router.post('/signup', (req,res) => {
       } else {
         return res.json({success:true})
       }
-    });
+    })
   }
 })
 
 function isDate(date) {
-  return !isNaN(Date.parse(date))
+  const yearReg = '(201[7-9]|202[0-9])'
+  const monthReg = '(0[1-9]|1[0-2])'
+  const dayReg = '(0[1-9]|1[0-9]|2[0-9]|3[0-1])'
+  const regex = new RegExp('^' + monthReg + '/' + dayReg + '/' + yearReg, 'g')
+
+  return regex.test(date)
 }
 module.exports = router

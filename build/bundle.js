@@ -32350,7 +32350,7 @@
 	            { htmlFor: 'date', className: 'form-label' },
 	            'Date'
 	          ),
-	          _react2.default.createElement('input', { defaultValue: date, ref: 'date', type: 'text', className: 'form-input', id: 'date', name: 'date', placeholder: 'mm-dd-yy' })
+	          _react2.default.createElement('input', { defaultValue: date, ref: 'date', type: 'text', className: 'form-input', id: 'date', name: 'date', placeholder: 'mm/dd/yyyy' })
 	        ),
 	        _react2.default.createElement(
 	          'fieldset',
