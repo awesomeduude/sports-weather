@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 import axios from 'axios'
 
@@ -83,4 +83,10 @@ class Event extends Component {
     )
   }
 }
+Event.propTypes = {
+  user: PropTypes.object.isRequired,
+  store: PropTypes.object,
+
+}
+
 export default Event

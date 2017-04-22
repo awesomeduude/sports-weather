@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import axios from 'axios'
 
 import Form from './Form.jsx'
@@ -73,6 +73,10 @@ class SignupForm extends Component {
     )
   }
 
+}
+
+SignupForm.propTypes = {
+  store: PropTypes.object
 }
 SignupForm.contextTypes = {
   router: React.PropTypes.object.isRequired

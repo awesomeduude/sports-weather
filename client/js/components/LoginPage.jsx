@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { observer, inject } from 'mobx-react'
 
 import LoginForm from './LoginForm.jsx'
@@ -26,4 +26,7 @@ class LoginPage extends Component {
   }
 }
 
+LoginPage.propTypes = {
+  store: PropTypes.object
+}
 export default LoginPage

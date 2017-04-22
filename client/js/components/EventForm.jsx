@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import axios from 'axios'
@@ -85,4 +85,8 @@ class EventForm extends Component {
   }
 }
 
+EventForm.propTypes = {
+  store: PropTypes.object,
+  type: PropTypes.string.isRequired
+}
 export default EventForm

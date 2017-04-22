@@ -32,4 +32,10 @@ class Form extends Component {
 
 }
 
+Form.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+  formType: PropTypes.string.isRequired,
+  fields: PropTypes.array.isRequired,
+
+}
 export default Form

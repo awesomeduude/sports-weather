@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { inject, observer } from 'mobx-react'
 
 import SignupForm from './SignupForm.jsx'
@@ -24,4 +24,7 @@ class SignupPage extends Component {
   }
 }
 
+SignupPage.propTypes = {
+  store: PropTypes.object
+}
 export default SignupPage
