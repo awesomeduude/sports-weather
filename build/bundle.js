@@ -58,7 +58,7 @@
 	
 	var _AppContainer2 = _interopRequireDefault(_AppContainer);
 	
-	var _AppState = __webpack_require__(274);
+	var _AppState = __webpack_require__(276);
 	
 	var _AppState2 = _interopRequireDefault(_AppState);
 	
@@ -70,8 +70,6 @@
 	var root = document.getElementById('app');
 	
 	_reactDom2.default.render(_react2.default.createElement(_AppContainer2.default, { user: user }), root);
-	
-	//add signout route
 
 /***/ },
 /* 1 */
@@ -21528,23 +21526,23 @@
 	
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 	
-	var _Event = __webpack_require__(239);
+	var _Event = __webpack_require__(240);
 	
 	var _Event2 = _interopRequireDefault(_Event);
 	
-	var _LoginPage = __webpack_require__(267);
+	var _LoginPage = __webpack_require__(268);
 	
 	var _LoginPage2 = _interopRequireDefault(_LoginPage);
 	
-	var _SignupPage = __webpack_require__(270);
+	var _SignupPage = __webpack_require__(271);
 	
 	var _SignupPage2 = _interopRequireDefault(_SignupPage);
 	
-	var _logout = __webpack_require__(272);
+	var _LogoutPage = __webpack_require__(273);
 	
-	var _logout2 = _interopRequireDefault(_logout);
+	var _LogoutPage2 = _interopRequireDefault(_LogoutPage);
 	
-	var _requireAuth = __webpack_require__(273);
+	var _requireAuth = __webpack_require__(275);
 	
 	var _requireAuth2 = _interopRequireDefault(_requireAuth);
 	
@@ -21575,8 +21573,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      return _react2.default.createElement(
 	        _mobxReact.Provider,
 	        { store: this.props.user },
@@ -21591,13 +21587,7 @@
 	            _react2.default.createElement(_reactRouter.Route, { path: 'dashboard', component: (0, _requireAuth2.default)(_Dashboard2.default, this.props.user) }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'events', component: (0, _requireAuth2.default)(_Event2.default, this.props.user) }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'login', component: _LoginPage2.default }),
-	            _react2.default.createElement(
-	              _reactRouter.Route,
-	              { path: 'logout', onEnter: function onEnter() {
-	                  return (0, _logout2.default)(_this2.props.user);
-	                } },
-	              _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/' })
-	            )
+	            _react2.default.createElement(_reactRouter.Route, { path: 'logout', component: _LogoutPage2.default })
 	          )
 	        )
 	      );
@@ -30576,29 +30566,54 @@
 	
 	var _mobxReact = __webpack_require__(234);
 	
+	var _Spinner = __webpack_require__(239);
+	
+	var _Spinner2 = _interopRequireDefault(_Spinner);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Dashboard = (0, _mobxReact.inject)('store')((0, _mobxReact.observer)(function (props) {
 	  return _react2.default.createElement(
 	    'div',
-	    null,
+	    { className: 'dashboard' },
 	    _react2.default.createElement(
 	      'h1',
 	      null,
 	      'Dashboard'
 	    ),
-	    _react2.default.createElement(
+	    props.store.name ? _react2.default.createElement(
 	      'h2',
 	      null,
 	      'Hello, ',
 	      props.store.name
-	    )
+	    ) : _react2.default.createElement(_Spinner2.default, null)
 	  );
 	}));
 	exports.default = Dashboard;
 
 /***/ },
 /* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Spinner = function Spinner() {
+	  return _react2.default.createElement("i", { className: "fa fa-spinner fa-pulse fa-3x fa-fw" });
+	};
+	exports.default = Spinner;
+
+/***/ },
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -30617,21 +30632,21 @@
 	
 	var _mobxReact = __webpack_require__(234);
 	
-	var _axios = __webpack_require__(240);
+	var _axios = __webpack_require__(241);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _EventForm = __webpack_require__(265);
+	var _EventForm = __webpack_require__(266);
 	
 	var _EventForm2 = _interopRequireDefault(_EventForm);
 	
-	var _EventTable = __webpack_require__(266);
+	var _EventTable = __webpack_require__(267);
 	
 	var _EventTable2 = _interopRequireDefault(_EventTable);
 	
-	var _Navbar = __webpack_require__(237);
+	var _Spinner = __webpack_require__(239);
 	
-	var _Navbar2 = _interopRequireDefault(_Navbar);
+	var _Spinner2 = _interopRequireDefault(_Spinner);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30649,38 +30664,17 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).call(this, props));
 	
-	    _this.handleAddEventClick = _this.handleAddEventClick.bind(_this);
-	    _this.handleEditEventClick = _this.handleEditEventClick.bind(_this);
-	    _this.handleDeleteEventClick = _this.handleDeleteEventClick.bind(_this);
-	    return _this;
-	  }
+	    _this.handleAddEventClick = function () {
+	      _this.props.store.setCurrentEventAction('CREATE');
+	    };
 	
-	  _createClass(Event, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      var _this2 = this;
+	    _this.handleEditEventClick = function (event) {
+	      _this.props.store.setCurrentEventAction('EDIT');
+	      _this.props.store.setEventBeingEdited(event);
+	    };
 	
-	      _axios2.default.get('/api').then(function (response) {
-	        _this2.props.store.setUser(response.data.user);
-	      });
-	    }
-	  }, {
-	    key: 'handleAddEventClick',
-	    value: function handleAddEventClick() {
-	      this.props.store.setCurrentEventAction('CREATE');
-	    }
-	  }, {
-	    key: 'handleEditEventClick',
-	    value: function handleEditEventClick(event) {
-	      this.props.store.setCurrentEventAction('EDIT');
-	      this.props.store.setEventBeingEdited(event);
-	    }
-	  }, {
-	    key: 'handleDeleteEventClick',
-	    value: function handleDeleteEventClick(id) {
-	      var _this3 = this;
-	
-	      this.props.store.setCurrentEventAction('DELETE');
+	    _this.handleDeleteEventClick = function (id) {
+	      _this.props.store.setCurrentEventAction('DELETE');
 	      if (confirm('Are you sure you want to delete this event?')) {
 	        _axios2.default.delete('/api/events', {
 	          data: {
@@ -30690,12 +30684,25 @@
 	          if (response.data.error) {
 	            store.setFormError(response.data.error);
 	          } else {
-	            _this3.props.store.resetFormError();
+	            _this.props.store.resetFormError();
 	            store.setUser(response.data);
 	            store.setCurrentEventAction('VIEW');
 	          }
 	        });
 	      }
+	    };
+	
+	    return _this;
+	  }
+	
+	  _createClass(Event, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      _axios2.default.get('/api').then(function (response) {
+	        _this2.props.store.setUser(response.data.user);
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -30721,11 +30728,7 @@
 	            { onClick: this.handleAddEventClick, className: 'btn btn-blue add-event' },
 	            'Add Event'
 	          ) : null
-	        ) : _react2.default.createElement(
-	          'p',
-	          null,
-	          'Spinner'
-	        ),
+	        ) : null,
 	        this.props.store.formError ? _react2.default.createElement(
 	          'div',
 	          { className: 'errors' },
@@ -30742,23 +30745,29 @@
 	
 	  return Event;
 	}(_react.Component)) || _class) || _class);
+	
+	Event.propTypes = {
+	  store: _react.PropTypes.object
+	
+	};
+	
 	exports.default = Event;
-
-/***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(241);
 
 /***/ },
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(242);
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
-	var utils = __webpack_require__(242);
-	var bind = __webpack_require__(243);
-	var Axios = __webpack_require__(244);
+	var utils = __webpack_require__(243);
+	var bind = __webpack_require__(244);
+	var Axios = __webpack_require__(245);
 	
 	/**
 	 * Create an instance of Axios
@@ -30791,15 +30800,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(262);
-	axios.CancelToken = __webpack_require__(263);
-	axios.isCancel = __webpack_require__(259);
+	axios.Cancel = __webpack_require__(263);
+	axios.CancelToken = __webpack_require__(264);
+	axios.isCancel = __webpack_require__(260);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(264);
+	axios.spread = __webpack_require__(265);
 	
 	module.exports = axios;
 	
@@ -30808,12 +30817,12 @@
 
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var bind = __webpack_require__(243);
+	var bind = __webpack_require__(244);
 	
 	/*global toString:true*/
 	
@@ -31113,7 +31122,7 @@
 
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31130,17 +31139,17 @@
 
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var defaults = __webpack_require__(245);
-	var utils = __webpack_require__(242);
-	var InterceptorManager = __webpack_require__(256);
-	var dispatchRequest = __webpack_require__(257);
-	var isAbsoluteURL = __webpack_require__(260);
-	var combineURLs = __webpack_require__(261);
+	var defaults = __webpack_require__(246);
+	var utils = __webpack_require__(243);
+	var InterceptorManager = __webpack_require__(257);
+	var dispatchRequest = __webpack_require__(258);
+	var isAbsoluteURL = __webpack_require__(261);
+	var combineURLs = __webpack_require__(262);
 	
 	/**
 	 * Create a new instance of Axios
@@ -31221,13 +31230,13 @@
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(242);
-	var normalizeHeaderName = __webpack_require__(246);
+	var utils = __webpack_require__(243);
+	var normalizeHeaderName = __webpack_require__(247);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -31244,10 +31253,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(247);
+	    adapter = __webpack_require__(248);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(247);
+	    adapter = __webpack_require__(248);
 	  }
 	  return adapter;
 	}
@@ -31314,12 +31323,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -31332,18 +31341,18 @@
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(242);
-	var settle = __webpack_require__(248);
-	var buildURL = __webpack_require__(251);
-	var parseHeaders = __webpack_require__(252);
-	var isURLSameOrigin = __webpack_require__(253);
-	var createError = __webpack_require__(249);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(254);
+	var utils = __webpack_require__(243);
+	var settle = __webpack_require__(249);
+	var buildURL = __webpack_require__(252);
+	var parseHeaders = __webpack_require__(253);
+	var isURLSameOrigin = __webpack_require__(254);
+	var createError = __webpack_require__(250);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(255);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -31439,7 +31448,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(255);
+	      var cookies = __webpack_require__(256);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -31516,12 +31525,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var createError = __webpack_require__(249);
+	var createError = __webpack_require__(250);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -31547,12 +31556,12 @@
 
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(250);
+	var enhanceError = __webpack_require__(251);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -31570,7 +31579,7 @@
 
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31595,12 +31604,12 @@
 
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -31669,12 +31678,12 @@
 
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	/**
 	 * Parse headers into an object
@@ -31712,12 +31721,12 @@
 
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31786,7 +31795,7 @@
 
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31828,12 +31837,12 @@
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31887,12 +31896,12 @@
 
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -31945,15 +31954,15 @@
 
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
-	var transformData = __webpack_require__(258);
-	var isCancel = __webpack_require__(259);
-	var defaults = __webpack_require__(245);
+	var utils = __webpack_require__(243);
+	var transformData = __webpack_require__(259);
+	var isCancel = __webpack_require__(260);
+	var defaults = __webpack_require__(246);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -32030,12 +32039,12 @@
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(242);
+	var utils = __webpack_require__(243);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -32056,7 +32065,7 @@
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32067,7 +32076,7 @@
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32087,7 +32096,7 @@
 
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32105,7 +32114,7 @@
 
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32130,12 +32139,12 @@
 
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(262);
+	var Cancel = __webpack_require__(263);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -32193,7 +32202,7 @@
 
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32226,7 +32235,7 @@
 
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32247,7 +32256,7 @@
 	
 	var _mobxReact = __webpack_require__(234);
 	
-	var _axios = __webpack_require__(240);
+	var _axios = __webpack_require__(241);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -32398,10 +32407,14 @@
 	  return EventForm;
 	}(_react.Component)) || _class;
 	
+	EventForm.propTypes = {
+	  store: _react.PropTypes.object,
+	  type: _react.PropTypes.string.isRequired
+	};
 	exports.default = EventForm;
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32521,7 +32534,7 @@
 	exports.default = EventTable;
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32540,7 +32553,7 @@
 	
 	var _mobxReact = __webpack_require__(234);
 	
-	var _LoginForm = __webpack_require__(268);
+	var _LoginForm = __webpack_require__(269);
 	
 	var _LoginForm2 = _interopRequireDefault(_LoginForm);
 	
@@ -32588,10 +32601,15 @@
 	
 	  return LoginPage;
 	}(_react.Component)) || _class) || _class);
+	
+	
+	LoginPage.propTypes = {
+	  store: _react.PropTypes.object
+	};
 	exports.default = LoginPage;
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32606,11 +32624,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(240);
+	var _axios = __webpack_require__(241);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _Form = __webpack_require__(269);
+	var _Form = __webpack_require__(270);
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
@@ -32681,13 +32699,16 @@
 	  return LoginForm;
 	}(_react.Component);
 	
+	LoginForm.propTypes = {
+	  store: _react.PropTypes.object
+	};
 	LoginForm.contextTypes = {
-	  router: _react2.default.PropTypes.object.isRequired
+	  router: _react.PropTypes.object.isRequired
 	};
 	exports.default = LoginForm;
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -32766,10 +32787,16 @@
 	  return Form;
 	}(_react.Component);
 	
+	Form.propTypes = {
+	  onFormSubmit: _react.PropTypes.func.isRequired,
+	  formType: _react.PropTypes.string.isRequired,
+	  fields: _react.PropTypes.array.isRequired
+	
+	};
 	exports.default = Form;
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32788,7 +32815,7 @@
 	
 	var _mobxReact = __webpack_require__(234);
 	
-	var _SignupForm = __webpack_require__(271);
+	var _SignupForm = __webpack_require__(272);
 	
 	var _SignupForm2 = _interopRequireDefault(_SignupForm);
 	
@@ -32836,10 +32863,15 @@
 	
 	  return SignupPage;
 	}(_react.Component)) || _class) || _class);
+	
+	
+	SignupPage.propTypes = {
+	  store: _react.PropTypes.object
+	};
 	exports.default = SignupPage;
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32854,11 +32886,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(240);
+	var _axios = __webpack_require__(241);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _Form = __webpack_require__(269);
+	var _Form = __webpack_require__(270);
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
@@ -32949,34 +32981,13 @@
 	  return SignupForm;
 	}(_react.Component);
 	
+	SignupForm.propTypes = {
+	  store: _react.PropTypes.object
+	};
 	SignupForm.contextTypes = {
 	  router: _react2.default.PropTypes.object.isRequired
 	};
 	exports.default = SignupForm;
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _axios = __webpack_require__(240);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var logout = function logout(store) {
-	  _axios2.default.get('/api/logout').then(function (response) {
-	    store.logout();
-	  });
-	};
-	
-	exports.default = logout;
 
 /***/ },
 /* 273 */
@@ -32990,63 +33001,45 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	exports.default = function (Component, store) {
-	  var Authenticate = function (_React$Component) {
-	    _inherits(Authenticate, _React$Component);
-	
-	    function Authenticate(props) {
-	      _classCallCheck(this, Authenticate);
-	
-	      return _possibleConstructorReturn(this, (Authenticate.__proto__ || Object.getPrototypeOf(Authenticate)).call(this, props));
-	    }
-	
-	    _createClass(Authenticate, [{
-	      key: 'componentDidMount',
-	      value: function componentDidMount() {
-	        var _this2 = this;
-	
-	        console.log('did mounted');
-	        _axios2.default.get('/api/').then(function (response) {
-	          console.log(response.data.user);
-	          if (response.data.user) {
-	            store.setUser(response.data.user);
-	          }
-	          if (!store.isAuthenticated) {
-	            _this2.context.router.push('/login');
-	          }
-	        });
-	      }
-	    }, {
-	      key: 'render',
-	      value: function render() {
-	        return _react2.default.createElement(Component, this.props);
-	      }
-	    }]);
-	
-	    return Authenticate;
-	  }(_react2.default.Component);
-	
-	  Authenticate.contextTypes = {
-	    router: _react2.default.PropTypes.object.isRequired
-	  };
-	  return Authenticate;
-	};
+	var _dec, _class;
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(240);
+	var _mobxReact = __webpack_require__(234);
 	
-	var _axios2 = _interopRequireDefault(_axios);
-
+	var _Logout = __webpack_require__(274);
+	
+	var _Logout2 = _interopRequireDefault(_Logout);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
+	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LogoutPage = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = function (_Component) {
+	  _inherits(LogoutPage, _Component);
+	
+	  function LogoutPage(props) {
+	    _classCallCheck(this, LogoutPage);
+	
+	    return _possibleConstructorReturn(this, (LogoutPage.__proto__ || Object.getPrototypeOf(LogoutPage)).call(this, props));
+	  }
+	
+	  _createClass(LogoutPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(_Logout2.default, { store: this.props.store });
+	    }
+	  }]);
+	
+	  return LogoutPage;
+	}(_react.Component)) || _class) || _class);
+	exports.default = LogoutPage;
 
 /***/ },
 /* 274 */
@@ -33060,7 +33053,144 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _axios = __webpack_require__(241);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Logout = function (_Component) {
+	  _inherits(Logout, _Component);
+	
+	  function Logout(props) {
+	    _classCallCheck(this, Logout);
+	
+	    return _possibleConstructorReturn(this, (Logout.__proto__ || Object.getPrototypeOf(Logout)).call(this, props));
+	  }
+	
+	  _createClass(Logout, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      _axios2.default.get('/api/logout').then(function (response) {
+	        if (response.data.success) {
+	          _this2.props.store.logout();
+	          _this2.context.router.push('/login');
+	        } else {
+	          console.log('didnt logout');
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return null;
+	    }
+	  }]);
+	
+	  return Logout;
+	}(_react.Component);
+	
+	Logout.contextTypes = {
+	  router: _react2.default.PropTypes.object.isRequired
+	};
+	
+	exports.default = Logout;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _axios = __webpack_require__(241);
+	
+	var _axios2 = _interopRequireDefault(_axios);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	exports.default = function (OldComponent, store) {
+	  var Authenticate = function (_Component) {
+	    _inherits(Authenticate, _Component);
+	
+	    function Authenticate() {
+	      _classCallCheck(this, Authenticate);
+	
+	      return _possibleConstructorReturn(this, (Authenticate.__proto__ || Object.getPrototypeOf(Authenticate)).apply(this, arguments));
+	    }
+	
+	    _createClass(Authenticate, [{
+	      key: 'componentDidMount',
+	      value: function componentDidMount() {
+	        var _this2 = this;
+	
+	        _axios2.default.get('/api/').then(function (response) {
+	          store.isFetchingUser();
+	          var user = response.data.user;
+	          if (user) {
+	            store.setUser(user);
+	          } else {
+	            console.log('no user-fromm Authenticate HOCa');
+	            _this2.context.router.push('/');
+	          }
+	        });
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(OldComponent, this.props);
+	      }
+	    }]);
+	
+	    return Authenticate;
+	  }(_react.Component);
+	
+	  Authenticate.contextTypes = {
+	    router: _react.PropTypes.object.isRequired
+	  };
+	  return Authenticate;
+	};
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
 	
 	var _mobx = __webpack_require__(235);
 	
@@ -33110,8 +33240,6 @@
 	}
 	
 	var User = (_class = function () {
-	  //the event that is currently being edited by the user
-	  //value is either view, create edit, or delete
 	  function User() {
 	    _classCallCheck(this, User);
 	
@@ -33123,9 +33251,14 @@
 	
 	    _initDefineProp(this, 'eventBeingEdited', _descriptor4, this);
 	
+	    _initDefineProp(this, 'fetchingUser', _descriptor5, this);
+	
 	    this.currentEventAction = 'VIEW';
+	    this.fetchingUser = false;
 	    this.resetEventBeingEdited();
-	  }
+	  } //the event that is currently being edited by the user
+	  //value is either view, create edit, or delete
+	
 	
 	  _createClass(User, [{
 	    key: 'setCurrentEventAction',
@@ -33160,6 +33293,12 @@
 	    key: 'setUser',
 	    value: function setUser(user) {
 	      this.user = user;
+	      this.fetchingUser = false;
+	    }
+	  }, {
+	    key: 'isFetchingUser',
+	    value: function isFetchingUser() {
+	      this.fetchingUser = true;
 	    }
 	  }, {
 	    key: 'logout',
@@ -33191,7 +33330,10 @@
 	}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'eventBeingEdited', [_mobx.observable], {
 	  enumerable: true,
 	  initializer: null
-	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'isAuthenticated', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'isAuthenticated'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'logout', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'logout'), _class.prototype)), _class);
+	}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'fetchingUser', [_mobx.observable], {
+	  enumerable: true,
+	  initializer: null
+	}), _applyDecoratedDescriptor(_class.prototype, 'name', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'name'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'isAuthenticated', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'isAuthenticated'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setCurrentEventAction', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setCurrentEventAction'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetEventBeingEdited', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetEventBeingEdited'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'resetFormError', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'resetFormError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'isFetchingUser', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'isFetchingUser'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'logout', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'logout'), _class.prototype)), _class);
 	exports.default = User;
 
 /***/ }
