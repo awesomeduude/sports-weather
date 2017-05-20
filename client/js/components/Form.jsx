@@ -4,7 +4,7 @@ class Form extends Component {
   constructor(props) {
     super(props)
   }
-  handleFormSubmit(e) {
+  handleFormSubmit = (e) => {
     e.preventDefault()
     this.props.onFormSubmit(this.refs)
   }
@@ -12,7 +12,7 @@ class Form extends Component {
     const { formType, fields } = this.props
 
     return (
-      <form onSubmit={this.handleFormSubmit.bind(this)} className="form">
+      <form onSubmit={this.handleFormSubmit} className="form">
         {
           fields.map(field => {
             const {inputType, type, label, placeholder} = field

@@ -10,7 +10,7 @@ class EventForm extends Component {
     super(props)
   }
 
-  handleFormSubmit(e) {
+  handleFormSubmit = (e) => {
     e.preventDefault()
     const { date, title , description, city, state } = this.refs
     const { store } = this.props
@@ -41,7 +41,7 @@ class EventForm extends Component {
 
 
   }
-  handleFormResponse(response) {
+  handleFormResponse = (response) => {
     if (response.data.error) {
       store.setFormError(response.data.error)
     } else {
@@ -56,7 +56,7 @@ class EventForm extends Component {
     const { eventBeingEdited } = this.props.store
     const { title, date, city, state, description } = eventBeingEdited
     return (
-      <form onSubmit={this.handleFormSubmit.bind(this)} action="" className="form event-form">
+      <form onSubmit={this.handleFormSubmit} action="" className="form event-form">
         <fieldset className="form-fieldset">
           <label htmlFor="title" className="form-label">Event Title</label>
           <input defaultValue={title} ref='title' type="text" className="form-input" id="title" name='title' placeholder='Enter Event Title'/>

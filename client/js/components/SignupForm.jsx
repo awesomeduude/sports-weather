@@ -7,7 +7,7 @@ class SignupForm extends Component {
   constructor(props) {
   super(props)
   }
-  handleFormSubmit(fields) {
+  handleFormSubmit = (fields) => {
 
     const { name, email, phone, password, cpassword } = fields
     const { store } = this.props
@@ -33,7 +33,7 @@ class SignupForm extends Component {
   render() {
     return (
       <Form
-        onFormSubmit={this.handleFormSubmit.bind(this)}
+        onFormSubmit={this.handleFormSubmit}
         formType="Signup"
         fields={
           [
