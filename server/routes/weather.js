@@ -59,7 +59,6 @@ function sendText(phoneNumber, message, callback) {
 
 module.exports.sendAllTexts = function sendAllTexts(date, callback) {
 
-
   Event.getAllEvents(date, (events) => {
 
     events.forEach((event, i, arr) => {
@@ -78,20 +77,16 @@ module.exports.sendAllTexts = function sendAllTexts(date, callback) {
 
           sendText(phone, message, () => {
 
-            // User.deleteEvent(email, id,() => {
-            //   //empty
-            // })
-            //
-            // Event.deleteEvent(email, date, id)
+            User.deleteEvent(email, id,() => {
+              //empty
+            })
+
+            Event.deleteEvent(email, date, id)
             if (arr.length-1 === i){
               callback()
             } //change this to after the event is deleted
-
           })
-
-
         })
-
       })
     })
 

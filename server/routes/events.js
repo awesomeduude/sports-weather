@@ -72,16 +72,19 @@ router.post('/events', (req,res) => {
 
 })
 router.delete('/events', (req,res) => {
-  const { id, time } = req.body
+  const { id } = req.body
+  console.log('from router',id)
   const { email } = req.user
 
   if (email) {
     req.method = 'GET'
 
     User.deleteEvent(email, id, () => {
-        return res.send({redirect:'/dashboard'})
+
     })
-    Event.deleteEvent(email, time, id)
+    Event.deleteEvent(id, () => {
+
+    })
 
   } else{
     return res.send('failed')

@@ -4,7 +4,6 @@ const { Schema } = mongoose
 const User = require('./user')
 
 const eventSchema = Schema({
-  id: Number,
   date: String,
   title: String,
   description: String,
@@ -29,14 +28,16 @@ module.exports.getAllEvents = (date, callback) => {
     console.log(err)
   })
 }
-module.exports.deleteEvent = (id) => {
-  const query = {'_id': id}
-
-  Event.findOne(query, (err, event) => {
-
+module.exports.deleteEvent = (id, callback) => {
+  const _id = mongoose.Types.ObjectId(id)
+  console.log('event _id', _id)
+  console.log('event id', id)
+  Event.findById(id, (err, event) => {
+    console.log('found', event)
     if (event) {
       event.remove()
       event.save()
+      callback()
     }
 
   })

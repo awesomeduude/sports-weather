@@ -31,15 +31,13 @@ const User = module.exports = mongoose.model('User', userSchema)
 
 module.exports.addEvent = (email, eventData, callback) => {
   const query = {email}
-  eventData.id = Math.random()
 
   User.findOne(query, (err,user) => {
     user.events.push(eventData)
     user.save()
     callback(user)
   }).then((response) => {
-    // callback(response)
-    // console.log('resp00bse', response);
+
   })
   eventData.email = email
   Event.createEvent(eventData)
@@ -66,6 +64,7 @@ module.exports.editEvent = (email, newEvent, callback) => {
   const query = {email}
 
   newEvent.id = mongoose.Types.ObjectId(newEvent.id)
+
   User.findOne(query, (err, user) => {
     let { events } = user
 
