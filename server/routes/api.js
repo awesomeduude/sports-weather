@@ -11,7 +11,10 @@ const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
 
 router.get('/', (req, res) => {
   const response = {user: req.user || null}
-  return res.json(response)
+  // setTimeout(() => {
+     return res.json(response)
+  // }, 5000)
+
 })
 router.post('/events', (req,res) => {
 
@@ -125,7 +128,8 @@ router.post('/login',  (req, res, next) => {
 })
 router.get('/logout', (req,res) => {
   req.logout()
-  return res.json({sucess:true})
+  console.log('logged out', req.user)
+  return res.json({success:true})
 })
 router.post('/signup', (req,res) => {
   const { name, email, phone, password, cpassword } = req.body
