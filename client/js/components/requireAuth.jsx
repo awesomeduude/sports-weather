@@ -4,7 +4,11 @@ import axios from 'axios'
 export default (OldComponent, store) => {
   class Authenticate extends Component {
     componentDidMount() {
+      if (store.user) {
+        return
+      }
       axios.get('/api/').then(response => {
+        console.log('res', response);
         store.isFetchingUser()
         const user = response.data.user
         if (user) {
