@@ -4,33 +4,25 @@ import axios from 'axios'
 
 import EventForm from './EventForm.jsx'
 import EventTable from './EventTable.jsx'
-import Navbar from './Navbar.jsx'
-
 
 @inject('store') @observer
 class Event extends Component {
   constructor(props){
     super(props)
-    this.handleAddEventClick = this.handleAddEventClick.bind(this)
-    this.handleEditEventClick = this.handleEditEventClick.bind(this)
-    this.handleDeleteEventClick = this.handleDeleteEventClick.bind(this)
   }
-  componentWillMount() {
+  componentDidMount() {
     axios.get('/api').then(response => {
       this.props.store.setUser(response.data.user)
     })
   }
-  handleAddEventClick() {
+  handleAddEventClick = () => {
     this.props.store.setCurrentEventAction('CREATE')
   }
-  handleEditEventClick(event) {
+  handleEditEventClick = (event) => {
     this.props.store.setCurrentEventAction('EDIT')
     this.props.store.setEventBeingEdited(event)
-
-
   }
-  handleDeleteEventClick(id) {
-
+  handleDeleteEventClick = (id) => {
     this.props.store.setCurrentEventAction('DELETE')
     if (confirm('Are you sure you want to delete this event?')) {
       axios.delete('/api/events', {
@@ -50,7 +42,7 @@ class Event extends Component {
 
   }
   render() {
-    const { user, currentEventAction } = this.props.store
+    const { user, currentEventAction, currentEventActionType } = this.props.store
     return (
       <div>
       <h1>Events</h1>
@@ -64,27 +56,25 @@ class Event extends Component {
             }
           </div>
           :
-          <p>Spinner</p>
+          null
         }
         {this.props.store.formError ?
           <div className="errors">
               <p className="error-text">{this.props.store.formError}</p>
           </div>
-
           :
           null
         }
         {currentEventAction === 'CREATE' || currentEventAction == 'EDIT' ?
-          <EventForm store={this.props.store} type={currentEventAction}/>
+          <EventForm store={this.props.store} type={currentEventActionType}/>
           :
           null
         }
-      </div>
+    </div>
     )
   }
 }
 Event.propTypes = {
-  user: PropTypes.object.isRequired,
   store: PropTypes.object,
 
 }

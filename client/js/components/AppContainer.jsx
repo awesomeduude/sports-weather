@@ -25,7 +25,7 @@ class AppContainer extends Component {
       <Provider store={this.props.user}>
         <Router history={browserHistory}>
           <Route path='/' component={App}>
-            <IndexRedirect to='/login' />
+            <IndexRedirect to='/signup' />
             <Route path='signup' component={SignupPage} />
             <Route path='dashboard' component={requireAuth(Dashboard, this.props.user)}/>
             <Route path='events' component={requireAuth(Event, this.props.user)}/>
