@@ -7,11 +7,12 @@ const router = express.Router()
 
 const User = require('../models/user')
 const Event = require('../models/event')
-const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
+const weatherKey = process.env.WEATHER_KEY
 
 router.get('/', (req, res) => {
   const response = {user: req.user || null}
   // setTimeout(() => {
+  console.log(response);
      return res.json(response)
   // }, 5000)
 
@@ -115,11 +116,11 @@ router.post('/login',  (req, res, next) => {
 
     if (!user){
       const error = info.message
-
+      console.log(error);
       return res.json({error})
     } else {
       req.logIn(user, (err) => {
-
+        console.log(user);
         return res.json({user})
       })
     }

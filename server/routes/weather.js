@@ -1,7 +1,7 @@
 const express = require('express')
 const axios = require('axios')
 
-let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN} = process.env
+let { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER } = process.env
 
 TWILIO_ACCOUNT_SID = TWILIO_ACCOUNT_SID.replace(/['"]+/g, '')
 TWILIO_AUTH_TOKEN = TWILIO_AUTH_TOKEN.replace(/['"]+/g, '')
@@ -11,7 +11,7 @@ const twilio = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 const router = express.Router()
 
-const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
+const weatherKey = process.env.WEATHER_KEY
 
 const Event = require('../models/event')
 const User = require('../models/user')

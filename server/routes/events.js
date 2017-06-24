@@ -6,7 +6,7 @@ const User = require('../models/user')
 const Event = require('../models/event')
 
 
-const weatherKey = process.env.WEATHER_KEY || require('../keys').weather
+const weatherKey = process.env.WEATHER_KEY
 
 router.get('/events', (req,res) => {
   // return res.render('events.pug', {

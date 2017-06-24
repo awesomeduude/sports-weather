@@ -3,3 +3,4 @@ keys.js
 /.idea/
 /reports/
 /build/
+.env

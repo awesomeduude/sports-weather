@@ -5,6 +5,7 @@ const expressValidator = require('express-validator')
 const path = require('path')
 const passport = require('passport')
 const session = require('express-session')
+require('dotenv').config()
 
 const signup = require('./routes/signup')
 const login = require('./routes/login')
@@ -34,12 +35,12 @@ app.use(expressValidator({
     }
   }
 }))
-var sess = {
+const sess = {
   secret: 'keyboard cat',
   cookie: {}
 }
 //if app is deployed
-if (process.env.MONGODB_URI) {
+if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1) // trust first proxy
   sess.cookie.secure = true // serve secure cookies
 }
@@ -61,9 +62,7 @@ app.get('*', (req,res) => {
   res.sendFile(path.join(__dirname,'..','/build', 'index.html'))
 })
 
-
-//const database = 'mongodb://127.0.0.1/myDb'
-const database = process.env.MONGODB_URI || require('./keys').database
+const database = process.env.MONGODB_URI
 mongoose.connect(database)
 
 app.listen(process.env.PORT || 3000, () => {
